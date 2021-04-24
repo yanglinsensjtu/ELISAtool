@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ICON/ELISA48.png</file>
+        <file>ICON/ELISA64.png</file>
+        <file>ICON/ELISA136.png</file>
+        <file>ICON/ELISA512.png</file>
+        <file>ICON/ELISA1024.png</file>
+    </qresource>
+</RCC>
