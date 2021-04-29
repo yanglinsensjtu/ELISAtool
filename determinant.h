@@ -5,7 +5,10 @@
 class Determinant
 {
 public:
+    void Perm(int list[], int begin, int end);
     double Value();
+
+
     Determinant();
     ~Determinant();
 

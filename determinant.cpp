@@ -6,15 +6,16 @@ Determinant::Determinant()
 
 }
 
-
+//数值交换
 inline void Swap(int &a, int &b)
 {
     int temp = a;
     a = b;;
     b = temp;
 }
+//计算全排列
 
-void Perm(int list[], int begin, int end)
+void Determinant::Perm(int list[], int begin, int end)
 {
     if (begin == end)
     {
@@ -34,9 +35,12 @@ void Perm(int list[], int begin, int end)
         }
     }
 }
+
 double Determinant::Value()
 {
 
 
 
 }
+
+
