@@ -1,5 +1,6 @@
 #include "determinant.h"
 #include <iostream>
+#include <qvector.h>
 using namespace std;
 Determinant::Determinant()
 {
@@ -13,8 +14,10 @@ inline void Swap(int &a, int &b)
     a = b;;
     b = temp;
 }
-//计算全排列
+//生成初始数列
 
+
+//计算全排列
 void Determinant::Perm(int list[], int begin, int end)
 {
     if (begin == end)
@@ -34,6 +37,17 @@ void Determinant::Perm(int list[], int begin, int end)
             Swap(list[begin], list[i]);
         }
     }
+}
+
+vector<int> invec(int n)
+{
+    vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(i);
+
+    }
+    return vec;
 }
 
 double Determinant::Value()
