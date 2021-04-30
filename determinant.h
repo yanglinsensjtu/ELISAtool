@@ -7,7 +7,7 @@ class Determinant
 
 public:
     void Swap(int &a, int &b);
-    void Perm(int list[], int begin, int end);
+    void Perm(QVector<int> vec, int begin, int end);
     double Value();
     QVector<int> inivec(int n);
 

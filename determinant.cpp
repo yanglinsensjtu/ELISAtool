@@ -19,23 +19,23 @@ void Determinant::Swap(int &a, int &b)
 
 
 //计算全排列
-void Determinant::Perm(int list[], int begin, int end)
+void Determinant::Perm(QVector<int> vec, int begin, int end)
 {
     if (begin == end)
     {
         for (int i = 0; i <= end; i++)
         {
-            cout << list[i];
+            qDebug() << vec[i];
         }
-        cout << endl;
+
     }
     else
     {
         for (int i = begin; i <= end; i++)
         {
-            Swap(list[begin], list[i]);
-            Perm(list, begin + 1, end);
-            Swap(list[begin], list[i]);
+            Swap(vec[begin], vec[i]);
+            Perm(vec, begin + 1, end);
+            Swap(vec[begin], vec[i]);
         }
     }
 }

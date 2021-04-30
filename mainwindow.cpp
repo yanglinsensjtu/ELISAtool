@@ -9,8 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     Determinant * D = new Determinant();
-    QVector<int> V = D->inivec(10);
-    qDebug() << V;
+    QVector<int> V = D->inivec(4);
+
+    D->Perm(V,0,3);
 }
 
 MainWindow::~MainWindow()
