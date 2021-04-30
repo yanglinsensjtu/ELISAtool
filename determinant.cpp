@@ -1,6 +1,7 @@
 #include "determinant.h"
 #include <iostream>
 #include <qvector.h>
+#include <QDebug>
 using namespace std;
 Determinant::Determinant()
 {
@@ -8,7 +9,7 @@ Determinant::Determinant()
 }
 
 //数值交换
-inline void Swap(int &a, int &b)
+void Determinant::Swap(int &a, int &b)
 {
     int temp = a;
     a = b;;
@@ -39,12 +40,13 @@ void Determinant::Perm(int list[], int begin, int end)
     }
 }
 
-vector<int> invec(int n)
+QVector<int> Determinant::inivec(int n)
 {
-    vector<int> vec;
+    QVector<int> vec;
     for (int i = 0; i < n; i++)
     {
         vec.push_back(i);
+
 
     }
     return vec;
