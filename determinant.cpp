@@ -52,6 +52,23 @@ bool Determinant::Iseven(int num)
     return ((num & 1) == 0);
 
 }
+//增加判断逆序数的函数
+bool Determinant::PowerIsPosition(QVector<int> &vec)
+{
+//    count即为逆序数，初始化为0
+    int count = 0;
+    for (int i = 0; i < (int)vec.size(); i++)
+    {
+        for (int j = i + 1; j < (int)vec.size(); i++)
+        {
+            if (vec[i] > vec[j])
+            {
+                count += 1;
+            }
+        }
+    }
+    return (Iseven(count));
+}
 
 double Determinant::Value()
 {
