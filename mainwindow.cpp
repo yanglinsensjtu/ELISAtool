@@ -10,8 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     Determinant * D = new Determinant();
     QVector<int> V = D->inivec(4);
-
-    D->Perm(V,0,3);
+    QVector<QVector<int>> vec_seq;
+    D->Perm(V,&vec_seq,0,3);
+    qDebug()<< vec_seq<< vec_seq.size();
 }
 
 MainWindow::~MainWindow()
