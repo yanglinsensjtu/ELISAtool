@@ -23,7 +23,7 @@ void Determinant::Perm(QVector<int> vec, QVector<QVector<int>> *vec_seq, int beg
 {
     if (begin == end)
     {
-            vec_seq->push_back(vec);
+        vec_seq->push_back(vec);
     }
     else
     {
@@ -48,14 +48,14 @@ QVector<int> Determinant::inivec(int n)
 }
 bool Determinant::Iseven(int num)
 {
-//用位运算来判断奇偶性
+    //用位运算来判断奇偶性
     return ((num & 1) == 0);
 
 }
 //增加判断逆序数的函数
 bool Determinant::PowerIsPosition(QVector<int> &vec)
 {
-//    count即为逆序数，初始化为0
+    //    count即为逆序数，初始化为0
     int count = 0;
     for (int i = 0; i < (int)vec.size(); i++)
     {
@@ -70,10 +70,34 @@ bool Determinant::PowerIsPosition(QVector<int> &vec)
     return (Iseven(count));
 }
 
-double Determinant::Value()
+double Determinant::calculate(int **array, int n)
 {
+    QVector<QVector<int>> vec_que;
+    QVector<int> vec = inivec(n);
+    QVector<int> vec_elem;
+    //    最终结果初始化为0
+    Perm(vec, &vec_que,0,vec.size()-1);
+    int result = 0;
+    //    依次从vec_que中取出行列式
+    for (int i = 0; i < vec_que.size(); i++)
+    {
+        vec_elem = vec_que[i];
+        //    mi即为前面(-1)的n次幂，最后结果为-1或者1
+        int mi = PowerIsPosition(vec_elem) ? 1 : -1;
+        int temp  = mi;
+        //        row号初始化为0之后依次加1
+        int row = 0;
+        //        col号依次从vec_elem中取出
+        for (int j = 0; j < (int)vec_elem.size(); j++)
+        {
+            int col = vec_elem[j];
 
+            temp *= array[row++][col];
+        }
+        result += temp;
 
+    }
+    return result;
 
 }
 
