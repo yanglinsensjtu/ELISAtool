@@ -36,7 +36,7 @@ void Determinant::Perm(QVector<int> vec, QVector<QVector<int>> *vec_seq, int beg
     }
 
 }
-
+//初始化序列生成
 QVector<int> Determinant::inivec(int n)
 {
     QVector<int> vec;
@@ -45,6 +45,12 @@ QVector<int> Determinant::inivec(int n)
         vec.push_back(i);
     }
     return vec;
+}
+bool Determinant::Iseven(int num)
+{
+//用位运算来判断奇偶性
+    return ((num & 1) == 0);
+
 }
 
 double Determinant::Value()

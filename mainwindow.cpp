@@ -9,10 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     Determinant * D = new Determinant();
-    QVector<int> V = D->inivec(4);
+    QVector<int> V = D->inivec(2);
     QVector<QVector<int>> vec_seq;
-    D->Perm(V,&vec_seq,0,3);
-    qDebug()<< vec_seq<< vec_seq.size();
+    D->Perm(V,&vec_seq,0,V.size()-1);
+    qDebug()<< vec_seq<< vec_seq.size() << D->Iseven(2);
 }
 
 MainWindow::~MainWindow()
