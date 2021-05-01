@@ -10,6 +10,7 @@ public:
     void Perm(QVector<int> vec, QVector<QVector<int> > *vec_seq, int begin, int end);
     double Value();
     bool Iseven(int num);
+    bool PowerIsPosition(QVector<int> & vec);
     QVector<int> inivec(int n);
 
     Determinant();
