@@ -17,13 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     {
         array[i] = new int[2];
     }
-    array[0][0] = 2;
-    array[0][1] = -4;
 
-    array[1][0] = 1;
-    array[1][1] = -5;
 
-    qDebug()<< vec_seq[1]<< vec_seq.size() << D->Iseven(2)<<D->PowerIsPosition(vec_seq[1])<< D->calculate(array,2) << *array;
+    qDebug()<< vec_seq[1] << D->calculate(array,2) << *array;
 
 }
 
