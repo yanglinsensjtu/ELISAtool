@@ -70,21 +70,21 @@ bool Determinant::PowerIsPosition(QVector<int> &vec)
     return (Iseven(count));
 }
 
-double Determinant::calculate(int **array, int n)
+double Determinant::calculate(double array[2][2], int n)
 {
     QVector<QVector<int>> vec_que;
     QVector<int> vec = inivec(n);
     QVector<int> vec_elem;
     //    最终结果初始化为0
     Perm(vec, &vec_que,0,vec.size()-1);
-    int result = 0;
+    double result = 0;
     //    依次从vec_que中取出行列式
     for (int i = 0; i < vec_que.size(); i++)
     {
         vec_elem = vec_que[i];
         //    mi即为前面(-1)的n次幂，最后结果为-1或者1
         int mi = PowerIsPosition(vec_elem) ? 1 : -1;
-        int temp  = mi;
+        double temp  = mi;
         //        row号初始化为0之后依次加1
         int row = 0;
         //        col号依次从vec_elem中取出

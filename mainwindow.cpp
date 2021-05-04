@@ -12,14 +12,28 @@ MainWindow::MainWindow(QWidget *parent)
     QVector<int> V = D->inivec(5);
     QVector<QVector<int>> vec_seq;
     D->Perm(V,&vec_seq,0,V.size()-1);
-    int** array = new int*[2];
+    double** array = new double*[2];
     for (int i = 0; i < 2; i++)
     {
-        array[i] = new int[2];
+        array[i] = new double[2];
     }
+    array[0][0]=1.0129048;
+    array[0][1]=2.1384738185;
+    array[1][0]=1.13445;
+    array[1][1]=1.1394835;
 
-
-    qDebug()<< vec_seq[1] << D->calculate(array,2) << *array;
+    double array1[2][2]={
+        {1.2,2.3},
+        {3.0,4.5}
+    };
+    qDebug()<< (int64_t)*array <<" "<< (int64_t)array << array[0][1];
+    qDebug()<<  D->calculate(array1,2)
+;
+    for (int i = 0; i < 2; i++)
+    {
+        delete [] array[i];
+    }
+    delete [] array;
 
 }
 
