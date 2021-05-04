@@ -22,13 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     array[1][0]=1.13445;
     array[1][1]=1.1394835;
 
-    double array1[2][2]={
-        {1.2,2.3},
-        {3.0,4.5}
-    };
-    qDebug()<< (int64_t)*array <<" "<< (int64_t)array << array[0][1];
-    qDebug()<<  D->calculate(array1,2)
-;
+
+    qDebug()<< (int64_t)*array <<" "<< (int64_t)array << D->calculate(array,2);
+
+
     for (int i = 0; i < 2; i++)
     {
         delete [] array[i];
