@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     array[1][1]=1.1394835;
 
 
-    qDebug()<< (int64_t)*array <<" "<< (int64_t)array << D->calculate(array,2);
+    qDebug()<<  D->calculate(array,2);
 
 
     for (int i = 0; i < 2; i++)
