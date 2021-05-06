@@ -8,7 +8,7 @@ class Determinant
 public:
     void Swap(int &a, int &b);
     void Perm(QVector<int> vec, QVector<QVector<int> > *vec_seq, int begin, int end);
-    double calculate(double **array, int n);
+    double calculate(QVector<double> *vec_Determinant, int n)
     bool Iseven(int num);
     bool PowerIsPosition(QVector<int> & vec);
     QVector<int> inivec(int n);
