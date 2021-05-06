@@ -15,8 +15,6 @@ void Determinant::Swap(int &a, int &b)
     a = b;
     b = temp;
 }
-//生成初始数列
-
 
 //计算全排列
 void Determinant::Perm(QVector<int> vec, QVector<QVector<int>> *vec_seq, int begin, int end)
