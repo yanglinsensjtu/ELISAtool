@@ -7,15 +7,26 @@ class FourParameterFunction
 public:
 
     QVector<double>  Partialerivative(QVector<double> xVector,
-                                      QVector<double> yVector,
                                       double A,
                                       double B,
                                       double C,
                                       double D);
-    double PartialerivativeA();
-    double PartialerivativeB();
-    double PartialerivativeC();
-    double PartialerivativeD();
+    QVector<double> PartialerivativeA(QVector<double> xVector,
+                                      double B,
+                                      double C);
+    QVector<double> PartialerivativeB(QVector<double> xVector,
+                                      double A,
+                                      double B,
+                                      double C,
+                                      double D);
+    QVector<double> PartialerivativeC(QVector<double> xVector,
+                                      double A,
+                                      double B,
+                                      double C,
+                                      double D);
+    QVector<double> PartialerivativeD(QVector<double> xVector,
+                                      double B,
+                                      double C);
 
     FourParameterFunction();
     ~FourParameterFunction();
