@@ -1,10 +1,20 @@
 #include "fourparameterfunction.h"
 #include <math.h>
+#include <QVector>
 
 
-double FourParameterFunction::Partialerivative(double array, double A, double B, double C, double D)
+QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector,
+                                                         QVector<double> yVector,
+                                                         double A,
+                                                         double B,
+                                                         double C,
+                                                         double D)
 {
-        return D+(A-D)/(1+pow((array/C),B));
+    for (int i = 0; i < xVector.size(); i++)
+    {
+        yVector[i] = D+(A-D)/(1+pow((xVector[i]/C),B));
+    }
+        return yVector;
 
 }
 
