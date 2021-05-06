@@ -68,7 +68,7 @@ bool Determinant::PowerIsPosition(QVector<int> &vec)
     return (Iseven(count));
 }
 
-double Determinant::calculate(QVector<double> *vec_Determinant, int n)
+double Determinant::calculate(QVector<QVector<double>> vec_Determinant, int n)
 {
     QVector<QVector<int>> vec_que;
     QVector<int> vec = inivec(n);
