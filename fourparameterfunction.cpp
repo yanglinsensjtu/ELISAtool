@@ -1,7 +1,6 @@
 #include "fourparameterfunction.h"
 #include <math.h>
 #include <QVector>
-#include <Eigen/Eigen>
 
 FourParameterFunction::FourParameterFunction()
 {
