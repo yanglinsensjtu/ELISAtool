@@ -1,6 +1,7 @@
 #include "fourparameterfunction.h"
 #include <math.h>
 #include <QVector>
+#include <Eigen/Eigen>
 
 FourParameterFunction::FourParameterFunction()
 {
@@ -23,6 +24,7 @@ QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector
 
 }
 
+//参数A的偏导数
 QVector<double> FourParameterFunction::PartialerivativeA(QVector<double> xVector,
                                                          double B,
                                                          double C)
@@ -36,7 +38,7 @@ QVector<double> FourParameterFunction::PartialerivativeA(QVector<double> xVector
     return yVector;
 
 }
-
+//参数B的偏导数
 QVector<double> FourParameterFunction::PartialerivativeB(QVector<double> xVector,
                                                          double A,
                                                          double B,
@@ -52,7 +54,7 @@ QVector<double> FourParameterFunction::PartialerivativeB(QVector<double> xVector
     return yVector;
 
 }
-
+//参数C的偏导数
 QVector<double> FourParameterFunction::PartialerivativeC(QVector<double> xVector,
                                                          double A,
                                                          double B,
@@ -67,7 +69,7 @@ QVector<double> FourParameterFunction::PartialerivativeC(QVector<double> xVector
     }
     return yVector;
 }
-
+//参数D的偏导数
 QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector,
                                                          double B,
                                                          double C)

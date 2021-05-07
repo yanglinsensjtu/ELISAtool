@@ -41,4 +41,6 @@ RESOURCES += \
     rec.qrc
 ICON = ELISA.icns
 
+INCLUDEPATH += /usr/local/Cellar/eigen/3.3.9/include/eigen3
+
 
