@@ -82,6 +82,11 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
     return yVector;
 }
 
+QVector<double> FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
+{
+
+}
+
 
 
 

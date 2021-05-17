@@ -27,6 +27,11 @@ public:
     QVector<double> PartialerivativeD(QVector<double> xVector,
                                       double B,
                                       double C);
+    QVector<double> JocabiMatrix(QVector<double> xVecotr,
+                                 double A,
+                                 double B,
+                                 double C,
+                                 double D);
 
     FourParameterFunction();
     ~FourParameterFunction();
