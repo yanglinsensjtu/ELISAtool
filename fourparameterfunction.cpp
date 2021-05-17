@@ -81,7 +81,7 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
     }
     return yVector;
 }
-
+//四参数方程的雅克比矩阵
 QVector<double> FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
 {
 
