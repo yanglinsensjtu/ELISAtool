@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     determinant.cpp \
     fourparameterfunction.cpp \
+    fourplinitialvalue.cpp \
     levenbergmarquardt.cpp \
     main.cpp \
     mainwindow.cpp
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     determinant.h \
     fourparameterfunction.h \
+    fourplinitialvalue.h \
     levenbergmarquardt.h \
     mainwindow.h
 
