@@ -13,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
+
+//    QString startConcentration = ui->startConcentration->setText();
+//    qDebug() << startConcentration;
 //    Determinant * D = new Determinant();
 //    QVector<int> V = D->inivec(5);
 //    QVector<QVector<int>> vec_seq;
@@ -36,7 +42,16 @@ MainWindow::MainWindow(QWidget *parent)
 //    vec_determ.push_back(vec1);
 //    vec_determ.push_back(vec2);
 
+//    Eigen::Matrix3d m,m1,m2;
+//    Eigen::Matrix<double, 3, 6> m4;
+//    m << 1,2, 3,4,5,6,7,8,9;
+//    m1 << 1,2, 3,4,5,6,7,8,9;
+//    m4 << m, m1;
 
+
+
+
+//    std::cout << m4 << std::endl;
 
 
 
@@ -58,3 +73,10 @@ MainWindow::~MainWindow()
 }
 
 
+
+void MainWindow::on_confirmStartCon_clicked()
+{
+    QString m = ui->startConcentration->text();
+            qDebug()<< m;
+
+}

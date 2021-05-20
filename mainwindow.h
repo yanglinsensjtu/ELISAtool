@@ -18,6 +18,9 @@ public:
     Determinant *D = new Determinant();
 
 
+private slots:
+    void on_confirmStartCon_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

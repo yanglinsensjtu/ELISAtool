@@ -43,6 +43,13 @@
           <item>
            <widget class="QLineEdit" name="startConcentration"/>
           </item>
+          <item>
+           <widget class="QPushButton" name="confirmStartCon">
+            <property name="text">
+             <string>确认</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -58,6 +65,13 @@
           </item>
           <item>
            <widget class="QLineEdit" name="lineEdit_2"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="confirmDilutionFold">
+            <property name="text">
+             <string> 确认</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
