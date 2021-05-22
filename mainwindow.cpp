@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
+//    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
 
 //    QString startConcentration = ui->startConcentration->setText();
 //    qDebug() << startConcentration;
@@ -76,7 +76,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_confirmStartCon_clicked()
 {
-    QString m = ui->startConcentration->text();
-            qDebug()<< m;
+    QString S_Value = ui->startConcentration->text();
+    qDebug()<< S_Value;
 
+}
+
+void MainWindow::on_confirmDilutionFold_clicked()
+{
+    QString D_Value = ui->dilutionValue->text();
+    qDebug()<<D_Value;
 }

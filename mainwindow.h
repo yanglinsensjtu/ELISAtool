@@ -21,6 +21,8 @@ public:
 private slots:
     void on_confirmStartCon_clicked();
 
+    void on_confirmDilutionFold_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
