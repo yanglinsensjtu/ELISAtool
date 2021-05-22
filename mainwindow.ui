@@ -41,7 +41,24 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="startConcentration"/>
+           <widget class="QLabel" name="display_S_value">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="startConcentration">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maxLength">
+             <number>32768</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="confirmStartCon">
@@ -64,9 +81,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="display_D_value">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLineEdit" name="dilutionValue">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>

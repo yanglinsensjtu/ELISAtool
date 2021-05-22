@@ -5,7 +5,7 @@
 #include "Eigen/Core"
 #include <iostream>
 
-
+#include <QDoubleValidator>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -64,12 +64,17 @@ MainWindow::MainWindow(QWidget *parent)
 //        delete [] array[i];
 //    }
 //    delete [] array;
+    QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
+    ui->startConcentration->setValidator(aQDoubleValidator);
+    ui->dilutionValue->setValidator(aQDoubleValidator);
+
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 
@@ -77,12 +82,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_confirmStartCon_clicked()
 {
     QString S_Value = ui->startConcentration->text();
-    qDebug()<< S_Value;
+    ui->display_S_value->setText(S_Value);
+    qDebug()<< S_Value.toDouble();
 
 }
 
 void MainWindow::on_confirmDilutionFold_clicked()
 {
     QString D_Value = ui->dilutionValue->text();
-    qDebug()<<D_Value;
+    ui->display_D_value->setText(D_Value);
+    qDebug()<<D_Value.toDouble();
 }
