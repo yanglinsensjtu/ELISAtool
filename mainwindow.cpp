@@ -4,7 +4,7 @@
 #include <QVector>
 #include "Eigen/Core"
 #include <iostream>
-
+#include <QRegExp>
 #include <QDoubleValidator>
 #include <QClipboard>
 
@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tableWidget_excel->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->tableWidget_excel,SIGNAL(customContextMenuRequested(QPoint)), this , SLOT(show_menu(QPoint)));
+    connect(ui->tableWidget_excel,SIGNAL(customContextMenuRequested(QPoint)), this , SLOT(show_menu()));
 
 
 //    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
@@ -67,17 +67,15 @@ MainWindow::MainWindow(QWidget *parent)
 //        delete [] array[i];
 //    }
 //    delete [] array;
+//    设置数字输入限制
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
     ui->dilutionValue->setValidator(aQDoubleValidator);
-
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
 }
 
 
@@ -96,8 +94,8 @@ void MainWindow::on_confirmDilutionFold_clicked()
     ui->display_D_value->setText(D_Value);
     qDebug()<<D_Value.toDouble();
 }
-
-void MainWindow::show_menu(const QPoint pos)
+//自定义tablewidget右键菜单 复制 黏贴 剪切
+void MainWindow::show_menu()
 {
         QMenu *menu = new QMenu(ui->tableWidget_excel);
         QAction *pnew = new QAction("Copy", ui->tableWidget_excel);
@@ -119,27 +117,38 @@ void MainWindow::show_menu(const QPoint pos)
 //        qDebug()<< row << col;
 //        QClipboard *qclipboard = QGuiApplication::clipboard();
 //        QString qclipboard_text = qclipboard->text();
-//            paste(row, col, qclipboard_text);
-//            connect(pnew2, &pnew2->trigger(), this, &MainWindow::paste());
+//        paste(row, col, qclipboard_text);
+//        connect(pnew2, &pnew2->trigger(), this, &MainWindow::paste());
 //        return pos;
 
 }
-
+//tablewidget右击菜单复制函数实现
 void MainWindow::copy()
 {
-    qDebug()<<ui->tableWidget_excel->selectedItems();
+    QList<QTableWidgetItem*> a = ui->tableWidget_excel->selectedItems();
+    qDebug() << a.at(3)->text();
     qDebug()<<"调用copy";
 }
-
+//tablewidget右击菜单剪切函数实现
 void MainWindow::cut()
 {
     qDebug()<<"调用cut";
 }
+//tablewidget右击菜单黏贴函数实现
 void MainWindow::paste()
 {
-    qDebug()<<"调用paste";
+    QClipboard *qclipboard = QGuiApplication::clipboard();
+    QString qclipboard_text = qclipboard->text();
+    qDebug()<<qclipboard_text;
+    QStringList q_str_list = qclipboard_text.split(QRegExp("\\r\\n|\\t"));
+    int count = qclipboard_text.count(QRegExp("\\r\\n"));
+    for (int i = 0; i < count+1; i++) {
+        for (int j = 0;j< q_str_list.size()/(count+1);j++) {
+            qDebug()<<q_str_list.at(j);
+            ui->tableWidget_excel->setItem(i,j,new QTableWidgetItem(q_str_list.at((q_str_list.size()/(count+1))*i)));
+        }
 
-    //    ui->tableWidget_excel->setItem(row,col,new QTableWidgetItem(qclipboard_text));
+    }
 }
 
 

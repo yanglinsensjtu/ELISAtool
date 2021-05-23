@@ -24,7 +24,7 @@ private slots:
     void on_confirmStartCon_clicked();
 
     void on_confirmDilutionFold_clicked();
-    void show_menu(const QPoint pos);
+    void show_menu();
     void copy();
     void cut();
     void paste();
