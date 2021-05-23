@@ -142,7 +142,6 @@ void MainWindow::paste()
 {
     QClipboard *qclipboard = QGuiApplication::clipboard();
     QString qclipboard_text = qclipboard->text();
-    qDebug()<<qclipboard_text;
     QStringList q_str_list = qclipboard_text.split(QRegExp("\\r\\n|\\t"));
     int count = qclipboard_text.count(QRegExp("\\r\\n"));
     for (int i = 0; i < count+1; i++) {
