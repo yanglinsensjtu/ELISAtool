@@ -28,6 +28,7 @@ private slots:
     void copy();
     void cut();
     void paste();
+    void clear();
 
 
 

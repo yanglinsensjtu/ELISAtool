@@ -104,9 +104,12 @@ void MainWindow::show_menu()
         connect(pnew2, SIGNAL(triggered()),this, SLOT(paste()));
         QAction *pnew3 = new QAction("Cut", ui->tableWidget_excel);
         connect(pnew3, SIGNAL(triggered()),this, SLOT(cut()));
+        QAction *pnew4 = new QAction("Clear", ui->tableWidget_excel);
+        connect(pnew4, SIGNAL(triggered()),this, SLOT(clear()));
         menu->addAction(pnew);
         menu->addAction(pnew2);
         menu->addAction(pnew3);
+        menu->addAction(pnew4);
         menu->move(cursor().pos());
         menu->show();
 //        int x = pos.x();
@@ -149,6 +152,11 @@ void MainWindow::paste()
         }
 
     }
+}
+
+void MainWindow::clear()
+{
+    ui->tableWidget_excel->clear();
 }
 
 
