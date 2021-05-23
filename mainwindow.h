@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "determinant.h"
+#include <QPoint>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,7 @@ private slots:
     void on_confirmStartCon_clicked();
 
     void on_confirmDilutionFold_clicked();
+    void show_menu(const QPoint pos);
 
 private:
     Ui::MainWindow *ui;

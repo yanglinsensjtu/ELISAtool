@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tableWidget_excel->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tableWidget_excel,SIGNAL(customContextMenuRequested(QPoint)), this , SLOT(show_menu(QPoint)));
 
 
 //    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
@@ -92,4 +94,21 @@ void MainWindow::on_confirmDilutionFold_clicked()
     QString D_Value = ui->dilutionValue->text();
     ui->display_D_value->setText(D_Value);
     qDebug()<<D_Value.toDouble();
+}
+
+void MainWindow::show_menu(const QPoint pos)
+{
+    QMenu *menu = new QMenu(ui->tableWidget_excel);
+    QAction *pnew = new QAction("first", ui->tableWidget_excel);
+    QAction *pnew2 = new QAction("second", ui->tableWidget_excel);
+    menu->addAction(pnew);
+    menu->addAction(pnew2);
+    menu->move(cursor().pos());
+    menu->show();
+    int x = pos.x();
+    int y = pos.y();
+    QModelIndex index = ui->tableWidget_excel->indexAt(QPoint(x,y));
+    int row = index.row(); //获取QTableWidget列表点击的行数
+    qDebug()<< row;
+
 }
