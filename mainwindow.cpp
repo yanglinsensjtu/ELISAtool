@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include <QDoubleValidator>
+#include <QClipboard>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -98,17 +99,52 @@ void MainWindow::on_confirmDilutionFold_clicked()
 
 void MainWindow::show_menu(const QPoint pos)
 {
-    QMenu *menu = new QMenu(ui->tableWidget_excel);
-    QAction *pnew = new QAction("first", ui->tableWidget_excel);
-    QAction *pnew2 = new QAction("second", ui->tableWidget_excel);
-    menu->addAction(pnew);
-    menu->addAction(pnew2);
-    menu->move(cursor().pos());
-    menu->show();
-    int x = pos.x();
-    int y = pos.y();
-    QModelIndex index = ui->tableWidget_excel->indexAt(QPoint(x,y));
-    int row = index.row(); //获取QTableWidget列表点击的行数
-    qDebug()<< row;
+        QMenu *menu = new QMenu(ui->tableWidget_excel);
+        QAction *pnew = new QAction("Copy", ui->tableWidget_excel);
+        connect(pnew, SIGNAL(triggered()),this, SLOT(copy()));
+        QAction *pnew2 = new QAction("Paste", ui->tableWidget_excel);
+        connect(pnew2, SIGNAL(triggered()),this, SLOT(paste()));
+        QAction *pnew3 = new QAction("Cut", ui->tableWidget_excel);
+        connect(pnew3, SIGNAL(triggered()),this, SLOT(cut()));
+        menu->addAction(pnew);
+        menu->addAction(pnew2);
+        menu->addAction(pnew3);
+        menu->move(cursor().pos());
+        menu->show();
+//        int x = pos.x();
+//        int y = pos.y();
+//        QModelIndex index = ui->tableWidget_excel->indexAt(QPoint(x,y));
+//        int row = index.row(); //获取QTableWidget列表点击的行数
+//        int col = index.column();
+//        qDebug()<< row << col;
+//        QClipboard *qclipboard = QGuiApplication::clipboard();
+//        QString qclipboard_text = qclipboard->text();
+//            paste(row, col, qclipboard_text);
+//            connect(pnew2, &pnew2->trigger(), this, &MainWindow::paste());
+//        return pos;
 
 }
+
+void MainWindow::copy()
+{
+    qDebug()<<ui->tableWidget_excel->selectedItems();
+    qDebug()<<"调用copy";
+}
+
+void MainWindow::cut()
+{
+    qDebug()<<"调用cut";
+}
+void MainWindow::paste()
+{
+    qDebug()<<"调用paste";
+
+    //    ui->tableWidget_excel->setItem(row,col,new QTableWidgetItem(qclipboard_text));
+}
+
+
+
+
+
+
+

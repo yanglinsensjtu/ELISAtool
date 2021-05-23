@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "determinant.h"
 #include <QPoint>
+#include <QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,8 +25,14 @@ private slots:
 
     void on_confirmDilutionFold_clicked();
     void show_menu(const QPoint pos);
+    void copy();
+    void cut();
+    void paste();
+
+
 
 private:
     Ui::MainWindow *ui;
+
 };
 #endif // MAINWINDOW_H
