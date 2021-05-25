@@ -128,9 +128,9 @@ void MainWindow::show_menu()
 //tablewidget右击菜单复制函数实现
 void MainWindow::copy()
 {
-    QList<QTableWidgetItem*> a = ui->tableWidget_excel->selectedItems();
-    qDebug() << a.at(3)->text();
-    qDebug()<<"调用copy";
+    QList<QTableWidgetSelectionRange> a = ui->tableWidget_excel->selectedRanges();
+
+    qDebug()<<"调用copy"<<a.at(0).topRow();
 }
 //tablewidget右击菜单剪切函数实现
 void MainWindow::cut()
@@ -143,14 +143,27 @@ void MainWindow::paste()
     QClipboard *qclipboard = QGuiApplication::clipboard();
     QString qclipboard_text = qclipboard->text();
     QStringList q_str_list = qclipboard_text.split(QRegExp("\\r\\n|\\t"));
+//    确定复制了多少行
     int count = qclipboard_text.count(QRegExp("\\r\\n"));
+
+//    选取选中的行列
+    QList<QTableWidgetSelectionRange> SelectedRange = ui->tableWidget_excel->selectedRanges();
+//    确定起始点的行位置和起始点的列位置
+    int r = SelectedRange.at(0).topRow();
+    int c = SelectedRange.at(0).leftColumn();
+
+
+
+
+//将复制的数据黏贴在选中的起始位置上
     for (int i = 0; i < count+1; i++) {
         for (int j = 0;j< q_str_list.size()/(count+1);j++) {
-            qDebug()<<q_str_list.at(j);
-            ui->tableWidget_excel->setItem(i,j,new QTableWidgetItem(q_str_list.at((q_str_list.size()/(count+1))*i)));
+            qDebug()<<i<<j;
+            ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));
         }
 
     }
+
 }
 
 void MainWindow::clear()
