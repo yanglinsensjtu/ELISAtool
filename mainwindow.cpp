@@ -71,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
     ui->dilutionValue->setValidator(aQDoubleValidator);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -106,10 +108,14 @@ void MainWindow::show_menu()
         connect(pnew3, SIGNAL(triggered()),this, SLOT(cut()));
         QAction *pnew4 = new QAction("Clear", ui->tableWidget_excel);
         connect(pnew4, SIGNAL(triggered()),this, SLOT(clear()));
+        QAction *pnew5 = new QAction("Add Group",ui->tableWidget_excel);
+        connect(pnew5, SIGNAL(triggered()), this, SLOT(addgroup()));
         menu->addAction(pnew);
         menu->addAction(pnew2);
         menu->addAction(pnew3);
         menu->addAction(pnew4);
+        menu->addSeparator();
+        menu->addAction(pnew5);
         menu->move(cursor().pos());
         menu->show();
 //        int x = pos.x();
@@ -151,24 +157,33 @@ void MainWindow::paste()
 //    确定起始点的行位置和起始点的列位置
     int r = SelectedRange.at(0).topRow();
     int c = SelectedRange.at(0).leftColumn();
-
-
-
-
 //将复制的数据黏贴在选中的起始位置上
     for (int i = 0; i < count+1; i++) {
         for (int j = 0;j< q_str_list.size()/(count+1);j++) {
-            qDebug()<<i<<j;
-            ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));
+            ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));            
         }
-
     }
-
 }
 
 void MainWindow::clear()
 {
     ui->tableWidget_excel->clear();
+}
+//增加数据分组
+void MainWindow::addgroup()
+{
+    //    选取选中的行列
+    QList<QTableWidgetSelectionRange> SelectedRange = ui->tableWidget_excel->selectedRanges();
+    int r = SelectedRange.at(0).topRow();
+    int c = SelectedRange.at(0).leftColumn();
+    int rc = SelectedRange.at(0).rowCount();
+    int cc = SelectedRange.at(0).columnCount();
+    for (int i = 0;i < rc; i++) {
+        for (int j = 0;j < cc; j++) {
+            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor("red");
+        }
+    }
+    ui->listWidget->addItem("分组1");
 }
 
 
