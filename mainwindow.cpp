@@ -196,7 +196,7 @@ void MainWindow::addgroup()
     int cc = SelectedRange.at(0).columnCount();
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
-            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor("blue");
+            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor("red");
         }
     }
     ui->listWidget->addItem("分组1");
