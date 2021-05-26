@@ -24,6 +24,7 @@ private slots:
     void on_confirmStartCon_clicked();
     void on_confirmDilutionFold_clicked();
     void show_menu();
+    void show_list_menu();
     void copy();
     void cut();
     void paste();

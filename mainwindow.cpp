@@ -14,8 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+//    增加tableWidget的总体右击菜单
     ui->tableWidget_excel->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget_excel,SIGNAL(customContextMenuRequested(QPoint)), this , SLOT(show_menu()));
+//    增加listwidget的右击菜单
+    ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->listWidget,SIGNAL(customContextMenuRequested(QPoint)), this , SLOT(show_list_menu()));
+
 
 
 //    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
@@ -131,6 +136,17 @@ void MainWindow::show_menu()
 //        return pos;
 
 }
+
+void MainWindow::show_list_menu()
+{
+    QMenu *menu = new QMenu(ui->listWidget);
+    QAction *deleteItem = new QAction("Delete", ui->listWidget);
+    menu->addAction(deleteItem);
+    menu->move(cursor().pos());
+    menu->show();
+
+
+}
 //tablewidget右击菜单复制函数实现
 void MainWindow::copy()
 {
@@ -180,7 +196,7 @@ void MainWindow::addgroup()
     int cc = SelectedRange.at(0).columnCount();
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
-            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor("red");
+            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor("blue");
         }
     }
     ui->listWidget->addItem("分组1");
