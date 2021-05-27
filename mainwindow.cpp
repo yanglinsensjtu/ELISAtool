@@ -7,7 +7,8 @@
 #include <QRegExp>
 #include <QDoubleValidator>
 #include <QClipboard>
-#include <qcolordialog.h>
+#include <QColorDialog>
+#include <QInputDialog>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -195,15 +196,18 @@ void MainWindow::addgroup()
     int c = SelectedRange.at(0).leftColumn();
     int rc = SelectedRange.at(0).rowCount();
     int cc = SelectedRange.at(0).columnCount();
-    QColorDialog *qc = new QColorDialog(this);
-    QColor color = qc->getColor("red",this,"选择颜色");
+    QColorDialog *qcd = new QColorDialog(this);
+    QColor color = qcd->getColor("red",this,"选择颜色");
+    QInputDialog *qid = new QInputDialog(this);
+    QLineEdit::EchoMode echoMode=QLineEdit::Normal;
+    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group1");
 
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
             ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor(color);
         }
     }
-    ui->listWidget->addItem("分组1");
+    ui->listWidget->addItem(str);
 }
 
 
