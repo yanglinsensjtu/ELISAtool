@@ -23,6 +23,8 @@ public:
     Eigen::Matrix<double, 8, 12> Matrix_x;
 //    保存分组数据的矩阵坐标
     int r_g, c_g, rc_g, cc_g;
+//    起始浓度
+    double S_Value_d, D_Value_d;
 
 
 private slots:

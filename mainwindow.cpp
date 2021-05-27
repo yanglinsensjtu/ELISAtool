@@ -94,7 +94,7 @@ void MainWindow::on_confirmStartCon_clicked()
 {
     QString S_Value = ui->startConcentration->text();
     ui->display_S_value->setText(S_Value);
-    qDebug()<< S_Value.toDouble();
+    S_Value_d =  S_Value.toDouble();
 
 
 }
@@ -103,7 +103,7 @@ void MainWindow::on_confirmDilutionFold_clicked()
 {
     QString D_Value = ui->dilutionValue->text();
     ui->display_D_value->setText(D_Value);
-    qDebug()<<D_Value.toDouble();
+    D_Value_d = D_Value.toDouble();
 }
 //自定义tablewidget右键菜单 复制 黏贴 剪切
 void MainWindow::show_menu()
