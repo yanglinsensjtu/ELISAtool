@@ -9,6 +9,7 @@
 #include <QClipboard>
 #include <QColorDialog>
 #include <QInputDialog>
+#include <stdio.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -94,6 +95,7 @@ void MainWindow::on_confirmStartCon_clicked()
     QString S_Value = ui->startConcentration->text();
     ui->display_S_value->setText(S_Value);
     qDebug()<< S_Value.toDouble();
+
 
 }
 
@@ -183,8 +185,12 @@ void MainWindow::paste()
     for (int i = 0; i < count+1; i++) {
         for (int j = 0;j< q_str_list.size()/(count+1);j++) {
             ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));            
+// 将数据保存入全局矩阵中
+            Matrix_x(i+r,j+c) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
+
         }
     }
+
 }
 
 void MainWindow::clear()
@@ -209,19 +215,20 @@ void MainWindow::addgroup()
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
             ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor(color);
+
         }
     }
+
     ui->listWidget->addItem(str);
 }
-
+//实现右击菜单修改分组名称
 void MainWindow::rename()
 {
     QInputDialog *qid = new QInputDialog(this);
     QLineEdit::EchoMode echoMode=QLineEdit::Normal;
-    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group1");
-   QList<QListWidgetItem*> qlwi = ui->listWidget->selectedItems();
-   qlwi.first()->setText(str);
-
+    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group");
+    QList<QListWidgetItem*> qlwi = ui->listWidget->selectedItems();
+    qlwi.first()->setText(str);
 }
 
 

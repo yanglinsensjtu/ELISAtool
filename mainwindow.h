@@ -5,6 +5,7 @@
 #include "determinant.h"
 #include <QPoint>
 #include <QMouseEvent>
+#include <Eigen/Core>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 //    Determinant *D = new Determinant();
+    Eigen::Matrix<double, 8, 12> Matrix_x;
 
 
 private slots:
