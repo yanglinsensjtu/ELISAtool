@@ -30,6 +30,7 @@ private slots:
     void paste();
     void clear();
     void addgroup();
+    void rename();
 
 
 

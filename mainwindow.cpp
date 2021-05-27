@@ -143,7 +143,11 @@ void MainWindow::show_list_menu()
 {
     QMenu *menu = new QMenu(ui->listWidget);
     QAction *deleteItem = new QAction("Delete", ui->listWidget);
+    QAction *renameItem = new QAction("Rename", ui->listWidget);
+    menu->addAction(renameItem);
+    connect(renameItem, SIGNAL(triggered()), this, SLOT(rename()));
     menu->addAction(deleteItem);
+
     menu->move(cursor().pos());
     menu->show();
 
@@ -208,6 +212,16 @@ void MainWindow::addgroup()
         }
     }
     ui->listWidget->addItem(str);
+}
+
+void MainWindow::rename()
+{
+    QInputDialog *qid = new QInputDialog(this);
+    QLineEdit::EchoMode echoMode=QLineEdit::Normal;
+    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group1");
+   QList<QListWidgetItem*> qlwi = ui->listWidget->selectedItems();
+   qlwi.first()->setText(str);
+
 }
 
 
