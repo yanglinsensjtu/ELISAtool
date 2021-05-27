@@ -19,7 +19,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 //    Determinant *D = new Determinant();
+//    保存所有数据
     Eigen::Matrix<double, 8, 12> Matrix_x;
+//    保存分组数据的矩阵坐标
     int r_g, c_g, rc_g, cc_g;
 
 
