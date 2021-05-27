@@ -20,6 +20,7 @@ public:
     ~MainWindow();
 //    Determinant *D = new Determinant();
     Eigen::Matrix<double, 8, 12> Matrix_x;
+    int r_g, c_g, rc_g, cc_g;
 
 
 private slots:

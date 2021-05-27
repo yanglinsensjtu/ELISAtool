@@ -206,6 +206,10 @@ void MainWindow::addgroup()
     int c = SelectedRange.at(0).leftColumn();
     int rc = SelectedRange.at(0).rowCount();
     int cc = SelectedRange.at(0).columnCount();
+    r_g = r;
+    c_g = c;
+    rc_g = rc;
+    cc_g = cc;
     QColorDialog *qcd = new QColorDialog(this);
     QColor color = qcd->getColor("red",this,"选择颜色");
     QInputDialog *qid = new QInputDialog(this);
@@ -215,7 +219,6 @@ void MainWindow::addgroup()
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
             ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor(color);
-
         }
     }
 
