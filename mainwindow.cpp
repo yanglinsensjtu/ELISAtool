@@ -259,11 +259,16 @@ void MainWindow::rename()
 
 void MainWindow::on_dataFit_btn_clicked()
 {
+
     for (int i = 0; i < 8; ++i) {
         for (int j = 0 ; j < 12; ++j) {
 
             try {
-                qDebug() << ui->tableWidget_excel->item(i,j)->background().color().rgba();
+                int a = ui->listWidget->item(0)->background().color().rgba();
+                int b = ui->tableWidget_excel->item(i,j)->background().color().rgba();
+                if(a == b){
+                    qDebug()<<i<<j;
+                }
 
 
             } catch (...) {
