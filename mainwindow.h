@@ -6,6 +6,7 @@
 #include <QPoint>
 #include <QMouseEvent>
 #include <Eigen/Core>
+#include <group.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,12 +20,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 //    Determinant *D = new Determinant();
-//    保存所有数据
-    Eigen::Matrix<double, 8, 12> Matrix_x;
-//    保存分组数据的矩阵坐标
-    int r_g, c_g, rc_g, cc_g;
-//    起始浓度
-    double S_Value_d, D_Value_d;
+
 
 
 private slots:
@@ -43,6 +39,14 @@ private slots:
 
 
 private:
+    //    保存所有数据
+    Eigen::Matrix<double, 8, 12> Matrix_x;
+    //    保存分组数据的矩阵坐标
+    int r_g, c_g, rc_g, cc_g;
+    //    起始浓度
+    double S_Value_d, D_Value_d;
+
+    Group *group1 = new Group(0,0,0,0);
     Ui::MainWindow *ui;
 
 };

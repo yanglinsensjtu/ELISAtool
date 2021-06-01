@@ -10,6 +10,7 @@
 #include <QColorDialog>
 #include <QInputDialog>
 #include <stdio.h>
+#include <group.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -81,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dilutionValue->setValidator(aQDoubleValidator);
 
 
+
 }
 
 MainWindow::~MainWindow()
@@ -95,8 +97,6 @@ void MainWindow::on_confirmStartCon_clicked()
     QString S_Value = ui->startConcentration->text();
     ui->display_S_value->setText(S_Value);
     S_Value_d =  S_Value.toDouble();
-
-
 }
 
 void MainWindow::on_confirmDilutionFold_clicked()
@@ -185,12 +185,14 @@ void MainWindow::paste()
     for (int i = 0; i < count+1; i++) {
         for (int j = 0;j< q_str_list.size()/(count+1);j++) {
             ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));            
-// 将数据保存入全局矩阵中
-            Matrix_x(i+r,j+c) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
-
+// 将数据保存入全局矩阵中,解决行数大于8后，Matrix_x无法存储的错误
+            qDebug()<<i+r;
+            if(i+r < 8){
+                Matrix_x(i+r,j+c) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
+            }
         }
     }
-
+std::cout << Matrix_x << std::endl;
 }
 
 void MainWindow::clear()
@@ -206,10 +208,12 @@ void MainWindow::addgroup()
     int c = SelectedRange.at(0).leftColumn();
     int rc = SelectedRange.at(0).rowCount();
     int cc = SelectedRange.at(0).columnCount();
-    r_g = r;
-    c_g = c;
-    rc_g = rc;
-    cc_g = cc;
+
+//    r_g = r;
+//    c_g = c;
+//    rc_g = rc;
+//    cc_g = cc;
+
     QColorDialog *qcd = new QColorDialog(this);
     QColor color = qcd->getColor("red",this,"选择颜色");
     QInputDialog *qid = new QInputDialog(this);
@@ -219,9 +223,10 @@ void MainWindow::addgroup()
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
             ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor(color);
+            group1->Matrix_G(i,j) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
         }
     }
-
+    std::cout<<group1->Matrix_G<<std::endl;
     ui->listWidget->addItem(str);
 }
 //实现右击菜单修改分组名称
