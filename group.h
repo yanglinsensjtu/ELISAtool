@@ -12,10 +12,11 @@ private:
     int colCount;
     double S_value;
     double D_value;
-public:
+    QString name;
     QVector<double> Mean_value_Vec;
     //    保存所有数据
     Eigen::Matrix<double, 8, 12> Matrix_G;
+public:
     Group(int r, int c, int rc, int cc);
 
     ~Group();
@@ -32,6 +33,10 @@ public:
     void setRowCount(int value);
     int getColCount() const;
     void setColCount(int value);
+    Eigen::Matrix<double, 8, 12> getMatrix_G() const;
+    void setMatrix_G(const Eigen::Matrix<double, 8, 12> &value);
+    QString getName() const;
+    void setName(const QString &value);
 };
 
 #endif // GROUP_H

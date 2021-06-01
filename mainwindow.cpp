@@ -184,15 +184,14 @@ void MainWindow::paste()
 //将复制的数据黏贴在选中的起始位置上
     for (int i = 0; i < count+1; i++) {
         for (int j = 0;j< q_str_list.size()/(count+1);j++) {
-            ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));            
 // 将数据保存入全局矩阵中,解决行数大于8后，Matrix_x无法存储的错误
-            qDebug()<<i+r;
-            if(i+r < 8){
+            if(i+r < 8 && j + c < 12){
+                ui->tableWidget_excel->setItem(i+r,j+c,new QTableWidgetItem(q_str_list.at(q_str_list.size()/(count+1)*i+j)));
                 Matrix_x(i+r,j+c) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
             }
         }
     }
-std::cout << Matrix_x << std::endl;
+//std::cout << Matrix_x << std::endl;
 }
 
 void MainWindow::clear()
@@ -203,31 +202,40 @@ void MainWindow::clear()
 void MainWindow::addgroup()
 {
     //    选取选中的行列
+    group_count +=1;
     QList<QTableWidgetSelectionRange> SelectedRange = ui->tableWidget_excel->selectedRanges();
     int r = SelectedRange.at(0).topRow();
     int c = SelectedRange.at(0).leftColumn();
     int rc = SelectedRange.at(0).rowCount();
     int cc = SelectedRange.at(0).columnCount();
 
-//    r_g = r;
-//    c_g = c;
-//    rc_g = rc;
-//    cc_g = cc;
+
+
 
     QColorDialog *qcd = new QColorDialog(this);
     QColor color = qcd->getColor("red",this,"选择颜色");
-    QInputDialog *qid = new QInputDialog(this);
-    QLineEdit::EchoMode echoMode=QLineEdit::Normal;
-    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group1");
+
+
+
 
     for (int i = 0;i < rc; i++) {
         for (int j = 0;j < cc; j++) {
-            ui->tableWidget_excel->item(i+r,j+c)->setBackgroundColor(color);
-            group1->Matrix_G(i,j) = ui->tableWidget_excel->item(i+r,j+c)->text().toDouble();
+            ui->tableWidget_excel->item(i+r,j+c)->setBackground(color);
         }
     }
-    std::cout<<group1->Matrix_G<<std::endl;
-    ui->listWidget->addItem(str);
+
+    QInputDialog *qid = new QInputDialog(this);
+    QLineEdit::EchoMode echoMode=QLineEdit::Normal;
+    QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group1");   
+
+//    std::cout<<group1->getMatrix_G()<<std::endl;
+    if(str.isEmpty()){
+        ui->listWidget->addItem("group tmp");
+    }else{
+        ui->listWidget->addItem(str);
+    }
+
+    ui->listWidget->item(group_count-1)->setBackground(color);
 }
 //实现右击菜单修改分组名称
 void MainWindow::rename()
@@ -237,6 +245,7 @@ void MainWindow::rename()
     QString str = qid->getText(this,"输入分组名称对话框","请输入分组名称",echoMode, "group");
     QList<QListWidgetItem*> qlwi = ui->listWidget->selectedItems();
     qlwi.first()->setText(str);
+
 }
 
 
@@ -245,3 +254,28 @@ void MainWindow::rename()
 
 
 
+
+void MainWindow::on_dataFit_btn_clicked()
+{
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0 ; j < 12; ++j) {
+
+            try {
+                qDebug() << ui->tableWidget_excel->item(i,j)->background().color().rgba();
+
+
+            } catch (...) {
+                qDebug()<< "无颜色";
+            }
+
+
+
+        }
+
+    }
+//    ui->tableWidget_excel->item();
+//    Group *group[group_count];
+//    for (int var = 0; var < group_count; ++var) {
+//        group[var] = new Group;
+//    }
+}

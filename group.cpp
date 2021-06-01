@@ -60,6 +60,26 @@ void Group::setColCount(int value)
     colCount = value;
 }
 
+Eigen::Matrix<double, 8, 12> Group::getMatrix_G() const
+{
+    return Matrix_G;
+}
+
+void Group::setMatrix_G(const Eigen::Matrix<double, 8, 12> &value)
+{
+    Matrix_G = value;
+}
+
+QString Group::getName() const
+{
+    return name;
+}
+
+void Group::setName(const QString &value)
+{
+    name = value;
+}
+
 Group::Group(int r, int c, int rc, int cc)
 {
     this->row = r;
