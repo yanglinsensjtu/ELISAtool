@@ -260,20 +260,17 @@ void MainWindow::rename()
 void MainWindow::on_dataFit_btn_clicked()
 {
 
+    int a = ui->listWidget->item(0)->background().color().rgba();
     for (int i = 0; i < 8; ++i) {
         for (int j = 0 ; j < 12; ++j) {
 
-            try {
-                int a = ui->listWidget->item(0)->background().color().rgba();
+
                 int b = ui->tableWidget_excel->item(i,j)->background().color().rgba();
                 if(a == b){
                     qDebug()<<i<<j;
                 }
 
 
-            } catch (...) {
-                qDebug()<< "无颜色";
-            }
 
 
 
