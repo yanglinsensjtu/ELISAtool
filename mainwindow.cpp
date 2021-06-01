@@ -197,6 +197,8 @@ void MainWindow::paste()
 void MainWindow::clear()
 {
     ui->tableWidget_excel->clear();
+    ui->listWidget->clear();
+    group_count = 0;
 }
 //增加数据分组
 void MainWindow::addgroup()
