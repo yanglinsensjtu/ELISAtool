@@ -235,6 +235,7 @@ void MainWindow::addgroup()
     }
 
     ui->listWidget->item(group_count-1)->setBackground(color);
+//    将分数据展示位table形式，便于观察
     QTableWidget *table = new QTableWidget(cc*rc, 2, ui->settingtab);
     table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
