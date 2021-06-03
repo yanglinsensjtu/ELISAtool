@@ -246,9 +246,12 @@ void MainWindow::addgroup()
     for (int i = 0; i < rc ; ++i) {
         for (int j = 0; j < cc; ++j) {
             QString str = ui->tableWidget_excel->item(i+r, j+c)->text();
+
             qDebug()<<str;
             try {
                 table->setItem(i+rc*j,0,new QTableWidgetItem(str));
+
+
 
             } catch (...) {
             }
