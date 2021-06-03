@@ -147,7 +147,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="datatab">
        <attribute name="title">
         <string> 数据</string>
        </attribute>
@@ -204,6 +204,15 @@
                <width>2000</width>
                <height>350</height>
               </size>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAsNeeded</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
              </property>
              <row>
               <property name="text">
@@ -400,15 +409,10 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="settingtab">
        <attribute name="title">
         <string>设置</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <layout class="QGridLayout" name="gridLayout"/>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>

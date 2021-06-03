@@ -211,9 +211,6 @@ void MainWindow::addgroup()
     int rc = SelectedRange.at(0).rowCount();
     int cc = SelectedRange.at(0).columnCount();
 
-
-
-
     QColorDialog *qcd = new QColorDialog(this);
     QColor color = qcd->getColor("red",this,"选择颜色");
 
@@ -238,6 +235,26 @@ void MainWindow::addgroup()
     }
 
     ui->listWidget->item(group_count-1)->setBackground(color);
+    QTableWidget *table = new QTableWidget(cc*rc, 2, ui->settingtab);
+    table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    table->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
+    table->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
+    QStringList header;
+    header<< "ReadValue"<<"MeanValue";
+    table->setHorizontalHeaderLabels(header);
+    for (int i = 0; i < rc ; ++i) {
+        for (int j = 0; j < cc; ++j) {
+            QString str = ui->tableWidget_excel->item(i+r, j+c)->text();
+            qDebug()<<str;
+            try {
+                table->setItem(i+rc*j,0,new QTableWidgetItem(str));
+
+            } catch (...) {
+            }
+        }
+    }
+
 }
 //实现右击菜单修改分组名称
 void MainWindow::rename()
