@@ -31,6 +31,13 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>显示分组</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QWidget" name="widget_6" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
@@ -138,6 +145,9 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::South</enum>
       </property>
@@ -145,7 +155,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="datatab">
        <attribute name="title">
@@ -410,6 +420,9 @@
        </layout>
       </widget>
       <widget class="QWidget" name="settingtab">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
        <attribute name="title">
         <string>设置</string>
        </attribute>

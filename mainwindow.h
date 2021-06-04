@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <Eigen/Core>
 #include <group.h>
+#include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,9 +41,12 @@ private slots:
 
     void on_dataFit_btn_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     //    保存分组的个数
     int group_count = 0;
+    QVector<QTableWidget*> qtw;
     //    保存所有数据
     Eigen::Matrix<double, 8, 12> Matrix_x;
     //    保存分组数据的矩阵坐标

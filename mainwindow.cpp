@@ -11,6 +11,8 @@
 #include <QInputDialog>
 #include <stdio.h>
 #include <group.h>
+#include <QVBoxLayout>
+#include <QScrollBar>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -236,11 +238,13 @@ void MainWindow::addgroup()
 
     ui->listWidget->item(group_count-1)->setBackground(color);
 //    将分数据展示位table形式，便于观察
-    QTableWidget *table = new QTableWidget(cc*rc, 2, ui->settingtab);
-    table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    table->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
-    table->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
+    QTableWidget *table = new QTableWidget(cc*rc, 2);
+//    QScrollBar *qscbar = new QScrollBar();
+//    table->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
+//    table->setVerticalScrollBar(qscbar);
+//    table->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
+//    table->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOn);
     QStringList header;
     header<< "ReadValue"<<"MeanValue";
     table->setHorizontalHeaderLabels(header);
@@ -258,6 +262,18 @@ void MainWindow::addgroup()
             }
         }
     }
+    qtw.push_back(table);
+//    for (int i =0; i< qtw.size(); ++i) {
+//        qtw.at(i)->setParent(ui->settingtab);
+//    }
+    qDebug()<< "qvector大小"<<qtw.size();
+//    QVBoxLayout *layout = new QVBoxLayout;
+//    for (int i = 0; i < qtw.size(); i++) {
+//        layout->addWidget(qtw.at(i));
+//    }
+//    ui->settingtab->setLayout(layout);
+
+
 
 }
 //实现右击菜单修改分组名称
@@ -303,4 +319,15 @@ void MainWindow::on_dataFit_btn_clicked()
 //    for (int var = 0; var < group_count; ++var) {
 //        group[var] = new Group;
 //    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    delete ui->settingtab->layout();
+
+        QVBoxLayout *layout = new QVBoxLayout;
+        for (int i = 0; i < qtw.size(); i++) {
+            layout->addWidget(qtw.at(i));
+        }
+        ui->settingtab->setLayout(layout);
 }
