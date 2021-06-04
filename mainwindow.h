@@ -52,7 +52,7 @@ private:
     //    保存分组数据的矩阵坐标
     int r_g, c_g, rc_g, cc_g;
     //    起始浓度
-    double S_Value_d, D_Value_d;
+    float S_Value_d, D_Value_d;
 
     //    Group *group1 = new Group(0,0,0,0);
     Ui::MainWindow *ui;

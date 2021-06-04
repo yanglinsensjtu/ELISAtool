@@ -261,7 +261,14 @@ void MainWindow::addgroup()
         qDebug() << sum;
         Qll.push_back(sum);
     }
+//根据药物的起始浓度S_value,计算在D_value稀释倍数下的药物稀释梯度
 
+    QList<float> DrugValue;
+    float DS_value = S_Value_d;
+    for (int j = 0; j < cc; j ++) {
+        DrugValue.push_back(DS_value);
+        DS_value /= D_Value_d;
+    }
     for (int i = 0; i < rc ; ++i) {
         for (int j = 0; j < cc; ++j) {
             QString str = ui->tableWidget_excel->item(i+r, j+c)->text();
@@ -269,8 +276,12 @@ void MainWindow::addgroup()
             try {
                 table->setItem(i+rc*j,0,new QTableWidgetItem(str));
                 table->item(i+rc*j,0)->setBackground(color);
+//                将计算出的均值加入分组的表格中
                 QString str1 = QString("%1").arg(Qll.at(j));
                 table->setItem(rc*j,1, new QTableWidgetItem(str1));
+//                将计算出的药物稀释梯度值加入到分组表格中
+                QString str2 = QString("%1").arg(DrugValue.at(j));
+                table->setItem(rc*j,2, new QTableWidgetItem(str2));
 
 
 
