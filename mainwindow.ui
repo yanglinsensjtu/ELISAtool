@@ -144,7 +144,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabWidgetplot">
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
@@ -155,7 +155,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="datatab">
        <attribute name="title">
@@ -424,7 +424,12 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <attribute name="title">
-        <string>设置</string>
+        <string>分组</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string> 作图</string>
        </attribute>
       </widget>
      </widget>
