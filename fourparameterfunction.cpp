@@ -8,13 +8,13 @@ FourParameterFunction::FourParameterFunction()
 }
 //four pararmeter logitic function
 
-QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector,
-                                                         double A,
-                                                         double B,
-                                                         double C,
-                                                         double D)
+QVector<float>  FourParameterFunction::Partialerivative(QVector<float> xVector,
+                                                         float A,
+                                                         float B,
+                                                         float C,
+                                                         float D)
 {
-    QVector<double> yVector;
+    QVector<float> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
         yVector[i] = D+(A-D)/(1+pow((xVector[i]/C),B));
@@ -24,11 +24,11 @@ QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector
 }
 
 //参数A的偏导数
-QVector<double> FourParameterFunction::PartialerivativeA(QVector<double> xVector,
-                                                         double B,
-                                                         double C)
+QVector<float> FourParameterFunction::PartialerivativeA(QVector<float> xVector,
+                                                         float B,
+                                                         float C)
 {
-    QVector<double> yVector;
+    QVector<float> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
         //        1/(1+(x/C)^B)
@@ -38,13 +38,13 @@ QVector<double> FourParameterFunction::PartialerivativeA(QVector<double> xVector
 
 }
 //参数B的偏导数
-QVector<double> FourParameterFunction::PartialerivativeB(QVector<double> xVector,
-                                                         double A,
-                                                         double B,
-                                                         double C,
-                                                         double D)
+QVector<float> FourParameterFunction::PartialerivativeB(QVector<float> xVector,
+                                                         float A,
+                                                         float B,
+                                                         float C,
+                                                         float D)
 {
-    QVector<double> yVector;
+    QVector<float> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
         //        ((x/C)^B)*(log(x/C))*((D-A)/((1+(x/C)^B)^2))
@@ -54,13 +54,13 @@ QVector<double> FourParameterFunction::PartialerivativeB(QVector<double> xVector
 
 }
 //参数C的偏导数
-QVector<double> FourParameterFunction::PartialerivativeC(QVector<double> xVector,
-                                                         double A,
-                                                         double B,
-                                                         double C,
-                                                         double D)
+QVector<float> FourParameterFunction::PartialerivativeC(QVector<float> xVector,
+                                                         float A,
+                                                         float B,
+                                                         float C,
+                                                         float D)
 {
-    QVector<double> yVector;
+    QVector<float> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
         //        ((x/C)^B)*((A-D)/((1+(x/C)^B)^2))*(B/C)
@@ -69,11 +69,11 @@ QVector<double> FourParameterFunction::PartialerivativeC(QVector<double> xVector
     return yVector;
 }
 //参数D的偏导数
-QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector,
-                                                         double B,
-                                                         double C)
+QVector<float> FourParameterFunction::PartialerivativeD(QVector<float> xVector,
+                                                         float B,
+                                                         float C)
 {
-    QVector<double> yVector;
+    QVector<float> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
         //        1-1/(1+(x/C)^B)
@@ -82,7 +82,7 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
     return yVector;
 }
 //四参数方程的雅克比矩阵
-QVector<double> FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
+QVector<float> FourParameterFunction::JocabiMatrix(QVector<float> xVecotr, float A, float B, float C, float D)
 {
 
 }

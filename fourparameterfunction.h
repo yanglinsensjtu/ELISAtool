@@ -6,32 +6,32 @@ class FourParameterFunction
 {
 public:
 
-    QVector<double>  Partialerivative(QVector<double> xVector,
-                                      double A,
-                                      double B,
-                                      double C,
-                                      double D);
-    QVector<double> PartialerivativeA(QVector<double> xVector,
-                                      double B,
-                                      double C);
-    QVector<double> PartialerivativeB(QVector<double> xVector,
-                                      double A,
-                                      double B,
-                                      double C,
-                                      double D);
-    QVector<double> PartialerivativeC(QVector<double> xVector,
-                                      double A,
-                                      double B,
-                                      double C,
-                                      double D);
-    QVector<double> PartialerivativeD(QVector<double> xVector,
-                                      double B,
-                                      double C);
-    QVector<double> JocabiMatrix(QVector<double> xVecotr,
-                                 double A,
-                                 double B,
-                                 double C,
-                                 double D);
+    QVector<float>  Partialerivative(QVector<float> xVector,
+                                      float A,
+                                      float B,
+                                      float C,
+                                      float D);
+    QVector<float> PartialerivativeA(QVector<float> xVector,
+                                      float B,
+                                      float C);
+    QVector<float> PartialerivativeB(QVector<float> xVector,
+                                      float A,
+                                      float B,
+                                      float C,
+                                      float D);
+    QVector<float> PartialerivativeC(QVector<float> xVector,
+                                      float A,
+                                      float B,
+                                      float C,
+                                      float D);
+    QVector<float> PartialerivativeD(QVector<float> xVector,
+                                      float B,
+                                      float C);
+    QVector<float> JocabiMatrix(QVector<float> xVecotr,
+                                 float A,
+                                 float B,
+                                 float C,
+                                 float D);
 
     FourParameterFunction();
     ~FourParameterFunction();
