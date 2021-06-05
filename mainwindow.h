@@ -6,7 +6,6 @@
 #include <QPoint>
 #include <QMouseEvent>
 #include <Eigen/Core>
-#include <group.h>
 #include <QTableWidget>
 
 QT_BEGIN_NAMESPACE

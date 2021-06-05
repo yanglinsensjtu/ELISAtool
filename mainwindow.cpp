@@ -10,7 +10,6 @@
 #include <QColorDialog>
 #include <QInputDialog>
 #include <stdio.h>
-#include <group.h>
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <math.h>
