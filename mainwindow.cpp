@@ -251,13 +251,12 @@ void MainWindow::addgroup()
     QList<float> Qll;
     for (int j = 0; j < cc ; ++j) {
         float sum = 0;
-
         for (int i = 0; i < rc; ++i) {
             float tmp =  ui->tableWidget_excel->item(i+r, j+c)->text().toDouble();
             sum += tmp;
         }
         sum = sum/rc;
-        qDebug() << sum;
+//        qDebug() << sum;
         Qll.push_back(sum);
     }
 //根据药物的起始浓度S_value,计算在D_value稀释倍数下的药物稀释梯度
@@ -322,22 +321,19 @@ void MainWindow::rename()
 
 void MainWindow::on_dataFit_btn_clicked()
 {
-
-    int a = ui->listWidget->item(0)->background().color().rgba();
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0 ; j < 12; ++j) {
-            int b = ui->tableWidget_excel->item(i,j)->background().color().rgba();
-            if(a == b){
-                qDebug()<<i<<j;
+    int rc = qtw.at(0)->rowCount();
+    QVector<float> vecMean;
+    for (int i = 0;i < rc; i++) {
+        try {
+            qDebug()<<qtw.at(0);
+            if(qtw.at(0)->item(i,1)!=nullptr){
+                float tmp = qtw.at(0)->item(i,1)->text().toDouble();
+                vecMean.push_back(tmp);
             }
+        } catch (...) {
         }
-
-    }
-    //    ui->tableWidget_excel->item();
-    //    Group *group[group_count];
-    //    for (int var = 0; var < group_count; ++var) {
-    //        group[var] = new Group;
-    //    }
+     }
+    qDebug()<<vecMean;
 }
 //将分组数据展示在后面表格中
 void MainWindow::on_pushButton_2_clicked()

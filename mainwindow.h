@@ -34,17 +34,13 @@ private slots:
     void clear();
     void addgroup();
     void rename();
-
-
-
-
     void on_dataFit_btn_clicked();
-
     void on_pushButton_2_clicked();
 
 private:
     //    保存分组的个数
     int group_count = 0;
+//    保存分组后的tablewidget
     QVector<QTableWidget*> qtw;
     //    保存所有数据
     Eigen::Matrix<double, 8, 12> Matrix_x;
