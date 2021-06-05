@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-//    Determinant *D = new Determinant();
+    Determinant *D = new Determinant();
 
 
 

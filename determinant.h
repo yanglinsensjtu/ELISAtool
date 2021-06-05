@@ -1,6 +1,7 @@
 #ifndef DETERMINANT_H
 #define DETERMINANT_H
-#include <qvector.h>
+#include <QVector>
+#include <Eigen/Core>
 
 class Determinant
 {
@@ -8,7 +9,7 @@ class Determinant
 public:
     void Swap(int &a, int &b);
     void Perm(QVector<int> vec, QVector<QVector<int> > *vec_seq, int begin, int end);
-    float calculate(QVector<QVector<float> > vec_Determinant, int n);
+    float calculate(Eigen::Matrix<float, 2, 2> M);
     bool Iseven(int num);
     bool PowerIsPosition(QVector<int> & vec);
     QVector<int> inivec(int n);

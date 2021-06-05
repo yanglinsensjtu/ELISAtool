@@ -2,6 +2,7 @@
 #include <iostream>
 #include <QVector>
 #include <QDebug>
+
 using namespace std;
 Determinant::Determinant()
 {
@@ -32,6 +33,39 @@ void Determinant::Perm(QVector<int> vec, QVector<QVector<int>> *vec_seq, int beg
             Swap(vec[begin], vec[i]);
         }
     }
+
+}
+
+float Determinant::calculate(Eigen::Matrix<float, 2, 2> M)
+{
+    int n = 2;
+    QVector<QVector<int>> vec_que;
+    QVector<int> vec = inivec(n);
+    QVector<int> vec_elem;
+    //    最终结果初始化为0
+    Perm(vec, &vec_que,0,vec.size()-1);
+    float result = 0;
+    //    依次从vec_que中取出行列式
+    for (int i = 0; i < vec_que.size(); i++)
+    {
+        vec_elem = vec_que[i];
+        //    mi即为前面(-1)的n次幂，最后结果为-1或者1
+        int mi = PowerIsPosition(vec_elem) ? 1 : -1;
+        float temp  = mi;
+        //        row号初始化为0之后依次加1
+        int row = 0;
+        //        col号依次从vec_elem中取出
+        for (int j = 0; j < (int)vec_elem.size(); j++)
+        {
+            int col = vec_elem[j];
+
+//            temp *= vec_Determinant[row++][col];
+            temp *= M(row++, col);
+        }
+        result += temp;
+
+    }
+    return result;
 
 }
 //初始化序列生成
@@ -68,35 +102,35 @@ bool Determinant::PowerIsPosition(QVector<int> &vec)
     return (Iseven(count));
 }
 
-float Determinant::calculate(QVector<QVector<float>> vec_Determinant, int n)
-{
-    QVector<QVector<int>> vec_que;
-    QVector<int> vec = inivec(n);
-    QVector<int> vec_elem;
-    //    最终结果初始化为0
-    Perm(vec, &vec_que,0,vec.size()-1);
-    float result = 0;
-    //    依次从vec_que中取出行列式
-    for (int i = 0; i < vec_que.size(); i++)
-    {
-        vec_elem = vec_que[i];
-        //    mi即为前面(-1)的n次幂，最后结果为-1或者1
-        int mi = PowerIsPosition(vec_elem) ? 1 : -1;
-        float temp  = mi;
-        //        row号初始化为0之后依次加1
-        int row = 0;
-        //        col号依次从vec_elem中取出
-        for (int j = 0; j < (int)vec_elem.size(); j++)
-        {
-            int col = vec_elem[j];
+//float Determinant::calculate(QVector<QVector<float>> vec_Determinant, int n)
+//{
+//    QVector<QVector<int>> vec_que;
+//    QVector<int> vec = inivec(n);
+//    QVector<int> vec_elem;
+//    //    最终结果初始化为0
+//    Perm(vec, &vec_que,0,vec.size()-1);
+//    float result = 0;
+//    //    依次从vec_que中取出行列式
+//    for (int i = 0; i < vec_que.size(); i++)
+//    {
+//        vec_elem = vec_que[i];
+//        //    mi即为前面(-1)的n次幂，最后结果为-1或者1
+//        int mi = PowerIsPosition(vec_elem) ? 1 : -1;
+//        float temp  = mi;
+//        //        row号初始化为0之后依次加1
+//        int row = 0;
+//        //        col号依次从vec_elem中取出
+//        for (int j = 0; j < (int)vec_elem.size(); j++)
+//        {
+//            int col = vec_elem[j];
 
-            temp *= vec_Determinant[row++][col];
-        }
-        result += temp;
+//            temp *= vec_Determinant[row++][col];
+//        }
+//        result += temp;
 
-    }
-    return result;
+//    }
+//    return result;
 
-}
+//}
 
 

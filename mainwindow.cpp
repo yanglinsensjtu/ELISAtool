@@ -13,6 +13,7 @@
 #include <math.h>
 
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -31,7 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
     ui->dilutionValue->setValidator(aQDoubleValidator);
+//    Eigen::Matrix<float, 2, 2> M;
+//    M(0,0) = 1;
+//    M(0,1) = 2;
+//    M(1,0) = 3;
+//    M(1,1) = 4;
 
+//    qDebug() << D->calculate(M);
 
 
 }
