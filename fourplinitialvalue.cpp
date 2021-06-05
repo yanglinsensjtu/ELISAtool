@@ -167,5 +167,11 @@ void FourPLInitialValue::setB(QVector<float> X, QVector<float> Y)
 
 FourPLInitialValue::FourPLInitialValue()
 {
-    
+
+}
+
+FourPLInitialValue::FourPLInitialValue(QVector<float> readValue, QVector<float> dilutionDrugValue)
+{
+    this->readValue = readValue;
+    this->dilutionDrugValue = dilutionDrugValue;
 }

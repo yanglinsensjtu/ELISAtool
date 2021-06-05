@@ -14,6 +14,7 @@ private:
 
 public:
     FourPLInitialValue();
+    FourPLInitialValue(QVector<float> readValue, QVector<float> dilutionDrugValue);
     ~FourPLInitialValue();
     QVector<float> getReadValue() const;
     void setReadValue(const QVector<float> &value);
