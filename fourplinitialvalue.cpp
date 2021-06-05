@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include <Eigen/Core>
+#include "determinant.h"
 using namespace std;
 QVector<float> FourPLInitialValue::getReadValue() const
 {
@@ -87,9 +88,16 @@ float FourPLInitialValue::getInitialB() const
     return initialB;
 }
 
-void FourPLInitialValue::setInitialB(float value)
+void FourPLInitialValue::setInitialB(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b)
 {
-    initialB = value;
+    Eigen::Matrix<float, 2, 2> DD1;
+    DD1 = a;
+    DD1(0,0)=b(0,0);
+    DD1(0,1)=b(0,1);
+    Determinant *Deter = new Determinant();
+    float  tmp = -Deter->calculate(DD1)/Deter->calculate(a);
+    initialB = tmp;
+    delete Deter;
 }
 
 float FourPLInitialValue::getInitialC() const
@@ -97,9 +105,17 @@ float FourPLInitialValue::getInitialC() const
     return initialC;
 }
 
-void FourPLInitialValue::setInitialC(float value)
+void FourPLInitialValue::setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b, float iniB)
 {
-    initialC = value;
+    Eigen::Matrix<float, 2, 2> DD2;
+    DD2 = a;
+    DD2(1,0)=b(0,0);
+    DD2(1,1)=b(0,1);
+    Determinant *Deter = new Determinant();
+    float  tmp = exp(Deter->calculate(DD2)/Deter->calculate(a)/iniB);
+
+    initialC = tmp;
+    delete Deter;
 }
 
 Eigen::Matrix<float, 2, 2> FourPLInitialValue::getA() const

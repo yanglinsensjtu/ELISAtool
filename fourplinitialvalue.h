@@ -28,9 +28,9 @@ public:
     QVector<float> getVariationX() const;
     void setVariationX(const QVector<float> &value);
     float getInitialB() const;
-    void setInitialB(float value);
+    void setInitialB(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b);
     float getInitialC() const;
-    void setInitialC(float value);
+    void setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b, float iniB);
     Eigen::Matrix<float, 2, 2> getA() const;
     void setA(QVector<float> X);
     Eigen::Matrix<float, 2, 1> getB() const;
