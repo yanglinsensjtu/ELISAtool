@@ -10,8 +10,6 @@
 #include <QColorDialog>
 #include <QInputDialog>
 #include <stdio.h>
-#include <QVBoxLayout>
-#include <QScrollBar>
 #include <math.h>
 
 
@@ -29,55 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-    //    connect(ui-> confirmStartCon, SIGNAL(clicked()), this, SLOT(on_confirmStartCon_clicked()) );
-
-    //    QString startConcentration = ui->startConcentration->setText();
-    //    qDebug() << startConcentration;
-    //    Determinant * D = new Determinant();
-    //    QVector<int> V = D->inivec(5);
-    //    QVector<QVector<int>> vec_seq;
-    //    D->Perm(V,&vec_seq,0,V.size()-1);
-    //    double** array = new double*[2];
-    //    for (int i = 0; i < 2; i++)
-    //    {
-    //        array[i] = new double[2];
-    //    }
-    //    array[0][0]=1.0129048;
-    //    array[0][1]=2.1384738185;
-    //    array[1][0]=1.13445;
-    //    array[1][1]=1.1394835;
-
-    //    QVector<QVector<double>> vec_determ;
-    //    QVector<double> vec1, vec2;
-    //    vec1.push_back(1.123);
-    //    vec1.push_back(12.34);
-    //    vec2.push_back(1.837);
-    //    vec2.push_back(2.3948);
-    //    vec_determ.push_back(vec1);
-    //    vec_determ.push_back(vec2);
-
-    //    Eigen::Matrix3d m,m1,m2;
-    //    Eigen::Matrix<double, 3, 6> m4;
-    //    m << 1,2, 3,4,5,6,7,8,9;
-    //    m1 << 1,2, 3,4,5,6,7,8,9;
-    //    m4 << m, m1;
-
-
-
-
-    //    std::cout << m4 << std::endl;
-
-
-
-    //    qDebug()<<  vec_determ[0][0]<<D->calculate(vec_determ, 2);
-
-
-
-    //    for (int i = 0; i < 2; i++)
-    //    {
-    //        delete [] array[i];
-    //    }
-    //    delete [] array;
     //    设置数字输入限制
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
@@ -129,17 +78,6 @@ void MainWindow::show_menu()
     menu->addAction(pnew5);
     menu->move(cursor().pos());
     menu->show();
-    //        int x = pos.x();
-    //        int y = pos.y();
-    //        QModelIndex index = ui->tableWidget_excel->indexAt(QPoint(x,y));
-    //        int row = index.row(); //获取QTableWidget列表点击的行数
-    //        int col = index.column();
-    //        qDebug()<< row << col;
-    //        QClipboard *qclipboard = QGuiApplication::clipboard();
-    //        QString qclipboard_text = qclipboard->text();
-    //        paste(row, col, qclipboard_text);
-    //        connect(pnew2, &pnew2->trigger(), this, &MainWindow::paste());
-    //        return pos;
 
 }
 
@@ -256,10 +194,10 @@ void MainWindow::addgroup()
             sum += tmp;
         }
         sum = sum/rc;
-//        qDebug() << sum;
+        //        qDebug() << sum;
         Qll.push_back(sum);
     }
-//根据药物的起始浓度S_value,计算在D_value稀释倍数下的药物稀释梯度
+    //根据药物的起始浓度S_value,计算在D_value稀释倍数下的药物稀释梯度
 
     QList<float> DrugValue;
     float DS_value = S_Value_d;
@@ -274,10 +212,10 @@ void MainWindow::addgroup()
             try {
                 table->setItem(i+rc*j,0,new QTableWidgetItem(str));
                 table->item(i+rc*j,0)->setBackground(color);
-//                将计算出的均值加入分组的表格中
+                //                将计算出的均值加入分组的表格中
                 QString str1 = QString("%1").arg(Qll.at(j));
                 table->setItem(rc*j,1, new QTableWidgetItem(str1));
-//                将计算出的药物稀释梯度值加入到分组表格中
+                //                将计算出的药物稀释梯度值加入到分组表格中
                 QString str2 = QString("%1").arg(DrugValue.at(j));
                 table->setItem(rc*j,2, new QTableWidgetItem(str2));
 
@@ -288,17 +226,6 @@ void MainWindow::addgroup()
         }
     }
     qtw.push_back(table);
-    //    for (int i =0; i< qtw.size(); ++i) {
-    //        qtw.at(i)->setParent(ui->settingtab);
-    //    }
-    qDebug()<< "qvector大小"<<qtw.size();
-    //    QVBoxLayout *layout = new QVBoxLayout;
-    //    for (int i = 0; i < qtw.size(); i++) {
-    //        layout->addWidget(qtw.at(i));
-    //    }
-    //    ui->settingtab->setLayout(layout);
-
-
 
 }
 //实现右击菜单修改分组名称
@@ -313,27 +240,28 @@ void MainWindow::rename()
 }
 
 
-
-
-
-
-
-
 void MainWindow::on_dataFit_btn_clicked()
 {
     int rc = qtw.at(0)->rowCount();
     QVector<float> vecMean;
     for (int i = 0;i < rc; i++) {
         try {
-            qDebug()<<qtw.at(0);
             if(qtw.at(0)->item(i,1)!=nullptr){
                 float tmp = qtw.at(0)->item(i,1)->text().toDouble();
                 vecMean.push_back(tmp);
             }
         } catch (...) {
         }
-     }
+    }
+    QVector<float> vecDilutionSeries;
+    for (int i = 0;i < rc; i++) {
+        if(qtw.at(0)->item(i,2)!=nullptr){
+            float tmp = qtw.at(0)->item(i,2)->text().toDouble();
+            vecDilutionSeries.push_back(tmp);
+        }
+    }
     qDebug()<<vecMean;
+    qDebug()<<vecDilutionSeries;
 }
 //将分组数据展示在后面表格中
 void MainWindow::on_pushButton_2_clicked()
