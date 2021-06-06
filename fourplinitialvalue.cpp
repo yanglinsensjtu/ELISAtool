@@ -100,7 +100,7 @@ void FourPLInitialValue::setInitialB(Eigen::Matrix<float, 2, 2> aDeter, Eigen::M
     Determinant *Deter = new Determinant();
     float  tmp = -Deter->calculate(DD1)/Deter->calculate(a);
     initialB = tmp;
-    delete [] &Deter;
+
 }
 
 float FourPLInitialValue::getInitialC() const
@@ -118,7 +118,7 @@ void FourPLInitialValue::setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix
     float  tmp = exp(Deter->calculate(DD2)/Deter->calculate(a)/iniB);
 
     initialC = tmp;
-//    delete[] &Deter;
+
 }
 
 Eigen::Matrix<float, 2, 2> FourPLInitialValue::getA() const
