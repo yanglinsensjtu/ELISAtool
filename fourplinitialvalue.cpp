@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <Eigen/Core>
 #include "determinant.h"
+#include <QDebug>
+#include <stdio.h>
+#include <iostream>
 using namespace std;
 QVector<float> FourPLInitialValue::getReadValue() const
 {
@@ -93,7 +96,7 @@ void FourPLInitialValue::setInitialB(Eigen::Matrix<float, 2, 2> aDeter, Eigen::M
     Eigen::Matrix2f DD1;
     DD1 = aDeter;
     DD1(0,0)=bDeter(0,0);
-    DD1(0,1)=bDeter(0,1);
+    DD1(0,1)=bDeter(1,0);
     Determinant *Deter = new Determinant();
     float  tmp = -Deter->calculate(DD1)/Deter->calculate(a);
     initialB = tmp;
@@ -110,12 +113,12 @@ void FourPLInitialValue::setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix
     Eigen::Matrix<float, 2, 2> DD2;
     DD2 = a;
     DD2(1,0)=b(0,0);
-    DD2(1,1)=b(0,1);
+    DD2(1,1)=b(1,0);
     Determinant *Deter = new Determinant();
     float  tmp = exp(Deter->calculate(DD2)/Deter->calculate(a)/iniB);
 
     initialC = tmp;
-    delete[] &Deter;
+//    delete[] &Deter;
 }
 
 Eigen::Matrix<float, 2, 2> FourPLInitialValue::getA() const
@@ -139,7 +142,6 @@ void FourPLInitialValue::setA(QVector<float> X)
     tmp(0,1) = X.size();
     tmp(1,0) = sumX2;
     tmp(1,1) = sumX;
-
     this->a = tmp;
 }
 
@@ -161,7 +163,7 @@ void FourPLInitialValue::setB(QVector<float> X, QVector<float> Y)
     }
     Eigen::Matrix<float, 2, 1> tmp;
     tmp(0, 0) = -sumY;
-    tmp(0 ,1) = sumXY;
+    tmp(1 ,0) = sumXY;
     this->b = tmp;
 }
 
