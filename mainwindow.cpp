@@ -11,6 +11,7 @@
 #include <QInputDialog>
 #include <stdio.h>
 #include <math.h>
+//#include <fourplinitialvalue.h>
 
 
 
@@ -32,13 +33,13 @@ MainWindow::MainWindow(QWidget *parent)
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
     ui->dilutionValue->setValidator(aQDoubleValidator);
-    Eigen::Matrix<float, 2, 2> M;
-    M(0,0) = 1;
-    M(0,1) = 2;
-    M(1,0) = 3;
-    M(1,1) = 4;
+//    Eigen::Matrix<float, 2, 2> M;
+//    M(0,0) = 1;
+//    M(0,1) = 2;
+//    M(1,0) = 3;
+//    M(1,1) = 4;
 
-    qDebug() << D->calculate(M);
+//    qDebug() << D->calculate(M);
 
 
 
@@ -270,6 +271,9 @@ void MainWindow::on_dataFit_btn_clicked()
     }
     qDebug()<<vecMean;
     qDebug()<<vecDilutionSeries;
+//    FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean, vecDilutionSeries);
+//    qDebug()<<initialValue->getInitialValue();
+
 }
 //将分组数据展示在后面表格中
 void MainWindow::on_pushButton_2_clicked()

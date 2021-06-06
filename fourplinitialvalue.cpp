@@ -88,16 +88,16 @@ float FourPLInitialValue::getInitialB() const
     return initialB;
 }
 
-void FourPLInitialValue::setInitialB(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b)
+void FourPLInitialValue::setInitialB(Eigen::Matrix<float, 2, 2> aDeter, Eigen::Matrix<float, 2, 1> bDeter)
 {
-    Eigen::Matrix<float, 2, 2> DD1;
-    DD1 = a;
-    DD1(0,0)=b(0,0);
-    DD1(0,1)=b(0,1);
+    Eigen::Matrix2f DD1;
+    DD1 = aDeter;
+    DD1(0,0)=bDeter(0,0);
+    DD1(0,1)=bDeter(0,1);
     Determinant *Deter = new Determinant();
     float  tmp = -Deter->calculate(DD1)/Deter->calculate(a);
     initialB = tmp;
-    delete Deter;
+    delete [] &Deter;
 }
 
 float FourPLInitialValue::getInitialC() const
@@ -115,7 +115,7 @@ void FourPLInitialValue::setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix
     float  tmp = exp(Deter->calculate(DD2)/Deter->calculate(a)/iniB);
 
     initialC = tmp;
-    delete Deter;
+    delete[] &Deter;
 }
 
 Eigen::Matrix<float, 2, 2> FourPLInitialValue::getA() const
@@ -140,7 +140,7 @@ void FourPLInitialValue::setA(QVector<float> X)
     tmp(1,0) = sumX2;
     tmp(1,1) = sumX;
 
-    a = tmp;
+    this->a = tmp;
 }
 
 Eigen::Matrix<float, 2, 1> FourPLInitialValue::getB() const
@@ -162,7 +162,7 @@ void FourPLInitialValue::setB(QVector<float> X, QVector<float> Y)
     Eigen::Matrix<float, 2, 1> tmp;
     tmp(0, 0) = -sumY;
     tmp(0 ,1) = sumXY;
-    b = tmp;
+    this->b = tmp;
 }
 
 QVector<float> FourPLInitialValue::getInitialValue() const
@@ -170,8 +170,13 @@ QVector<float> FourPLInitialValue::getInitialValue() const
     return initialValue;
 }
 
-void FourPLInitialValue::setInitialValue(const QVector<float> &value)
+void FourPLInitialValue::setInitialValue(const float &A, const float &B,const float &C,const float &D)
 {
+    QVector<float> value;
+    value.push_back(A);
+    value.push_back(B);
+    value.push_back(C);
+    value.push_back(D);
     initialValue = value;
 }
 
@@ -180,7 +185,7 @@ FourPLInitialValue::FourPLInitialValue()
     
 }
 
-FourPLInitialValue::FourPLInitialValue(QVector<float> readValue, QVector<float> dilutionDrugValue)
+FourPLInitialValue::FourPLInitialValue(const QVector<float> &readValue, const QVector<float> &dilutionDrugValue)
 {
     this->readValue = readValue;
     this->dilutionDrugValue = dilutionDrugValue;
@@ -192,4 +197,5 @@ FourPLInitialValue::FourPLInitialValue(QVector<float> readValue, QVector<float> 
     this->setB(this->getVariationX(),this->getVariationY());
     this->setInitialB(this->getA(),this->getB());
     this->setInitialC(this->getA(),this->getB(),this->getInitialB());
+    this->setInitialValue(this->getInitialA(),this->getInitialB(),this->getInitialC(),this->getInitialD());
 }
