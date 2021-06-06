@@ -31,7 +31,7 @@ float FourPLInitialValue::getInitialA() const
 //从检测数据的均值中返回最小值作为A的初值
 void FourPLInitialValue::setInitialA(QVector<float> value)
 {
-    initialA = *min_element(value.begin(),value.end());
+    initialA = *min_element(value.begin(),value.end()) - 0.01;
 }
 float FourPLInitialValue::getInitialD() const
 {
@@ -41,7 +41,7 @@ float FourPLInitialValue::getInitialD() const
 //从检测数据的均值中返回最大值作为D的初值
 void FourPLInitialValue::setInitialD(QVector<float> value)
 {
-    initialD = *max_element(value.begin(),value.end());
+    initialD = *max_element(value.begin(),value.end()) + 0.01;
 }
 
 QVector<float> FourPLInitialValue::getVariationY() const
@@ -174,4 +174,12 @@ FourPLInitialValue::FourPLInitialValue(QVector<float> readValue, QVector<float> 
 {
     this->readValue = readValue;
     this->dilutionDrugValue = dilutionDrugValue;
+    this->setInitialA(readValue);
+    this->setInitialD(readValue);
+    this->setVariationX(dilutionDrugValue);
+    this->setVariationY(readValue,this->getInitialA(),this->getInitialD());
+    this->setA(this->getVariationX());
+    this->setB(this->getVariationX(),this->getVariationY());
+    this->setInitialB(this->getA(),this->getB());
+    this->setInitialC(this->getA(),this->getB(),this->getInitialB());
 }
