@@ -11,6 +11,7 @@ private:
     float initialA, initialB, initialC, initialD;
     QVector<float> variationY, variationX;
     QVector<float> readValue, dilutionDrugValue;
+    QVector<float> initialValue;
 
 public:
     FourPLInitialValue();
@@ -36,6 +37,8 @@ public:
     void setA(QVector<float> X);
     Eigen::Matrix<float, 2, 1> getB() const;
     void setB(QVector<float> X, QVector<float> Y);
+    QVector<float> getInitialValue() const;
+    void setInitialValue(const QVector<float> &value);
 };
 
 #endif // FOURPLINITIALVALUE_H
