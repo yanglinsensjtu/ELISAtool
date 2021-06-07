@@ -276,12 +276,14 @@ void MainWindow::on_dataFit_btn_clicked()
 
     qDebug()<<initialValue->getInitialValue() ;
     FourParameterFunction *FPF = new FourParameterFunction();
-    FPF->JocabiMatrix(vecDilutionSeries,
+
+               std::cout<< FPF->JocabiMatrix(vecDilutionSeries,
                       initialValue->getInitialA(),
                       initialValue->getInitialB(),
                       initialValue->getInitialC(),
-                      initialValue->getInitialD());
-//    FPF->JocabiMatrix(vecDilutionSeries,initialValue->getInitialA(),initialValue->getInitialB(),initialValue->getInitialC(),initialValue->getInitialD());
+                      initialValue->getInitialD()) <<std::endl;
+
+    //    FPF->JocabiMatrix(vecDilutionSeries,initialValue->getInitialA(),initialValue->getInitialB(),initialValue->getInitialC(),initialValue->getInitialD());
 
 
 
