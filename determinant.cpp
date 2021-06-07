@@ -36,7 +36,7 @@ void Determinant::Perm(QVector<int> vec, QVector<QVector<int>> *vec_seq, int beg
 
 }
 
-float Determinant::calculate(Eigen::Matrix<float, 2, 2> M)
+double Determinant::calculate(Eigen::Matrix<double, 2, 2> M)
 {
     int n = 2;
     QVector<QVector<int>> vec_que;
@@ -44,7 +44,7 @@ float Determinant::calculate(Eigen::Matrix<float, 2, 2> M)
     QVector<int> vec_elem;
     //    最终结果初始化为0
     Perm(vec, &vec_que,0,vec.size()-1);
-    float result = 0;
+    double result = 0;
     //    依次从vec_que中取出行列式
     for (int i = 0; i < vec_que.size(); i++)
     {

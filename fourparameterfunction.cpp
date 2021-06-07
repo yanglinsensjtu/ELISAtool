@@ -1,6 +1,7 @@
 #include "fourparameterfunction.h"
 #include <math.h>
 #include <QVector>
+#include <QDebug>
 
 FourParameterFunction::FourParameterFunction()
 {
@@ -81,10 +82,16 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
     }
     return yVector;
 }
+
 //四参数方程的雅克比矩阵
 QVector<double> FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
 {
-
+    QVector<double> PA = PartialerivativeA(xVecotr,B,C);
+    QVector<double> PB = PartialerivativeB(xVecotr,A,B,C,D);
+    QVector<double> PC = PartialerivativeC(xVecotr,A,B,C,D);
+    QVector<double> PD = PartialerivativeD(xVecotr,B,C);
+    qDebug()<<PA<<PB<<PC<<PD;
+    return PA;
 }
 
 

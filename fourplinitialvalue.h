@@ -6,50 +6,50 @@
 class FourPLInitialValue
 {
 private:
-    Eigen::Matrix<float, 2, 2> a;
-    Eigen::Matrix<float, 2, 1> b;
-    float initialA, initialB, initialC, initialD;
-    QVector<float> variationY, variationX;
-    QVector<float> readValue, dilutionDrugValue;
-    QVector<float> initialValue;
+    Eigen::Matrix<double, 2, 2> a;
+    Eigen::Matrix<double, 2, 1> b;
+    double initialA, initialB, initialC, initialD;
+    QVector<double> variationY, variationX;
+    QVector<double> readValue, dilutionDrugValue;
+    QVector<double> initialValue;
 
 public:
     FourPLInitialValue();
-    FourPLInitialValue(const QVector<float> &readValue, const QVector<float> &dilutionDrugValue);
+    FourPLInitialValue(const QVector<double> readValue, const QVector<double> dilutionDrugValue);
     ~FourPLInitialValue();
 
-    QVector<float> getReadValue() const;
-    void setReadValue(const QVector<float> &value);
+    QVector<double> getReadValue() const;
+    void setReadValue(const QVector<double> &value);
 
-    QVector<float> getDilutionDrugValue() const;
-    void setDilutionDrugValue(const QVector<float> &value);
+    QVector<double> getDilutionDrugValue() const;
+    void setDilutionDrugValue(const QVector<double> &value);
 
-    float getInitialA() const;
-    void setInitialA(QVector<float> value);
+    double getInitialA() const;
+    void setInitialA(QVector<double> value);
 
-    float getInitialD() const;
-    void setInitialD(QVector<float> value);
+    double getInitialD() const;
+    void setInitialD(QVector<double> value);
 
-    QVector<float> getVariationY() const;
-    void setVariationY(const QVector<float> &value, float initialA, float initialB);
+    QVector<double> getVariationY() const;
+    void setVariationY(const QVector<double> &value, double initialA, double initialB);
 
-    QVector<float> getVariationX() const;
-    void setVariationX(const QVector<float> &value);
+    QVector<double> getVariationX() const;
+    void setVariationX(const QVector<double> &value);
 
-    float getInitialB() const;
-    void setInitialB(Eigen::Matrix<float, 2, 2> aDeter, Eigen::Matrix<float, 2, 1> bDeter);
+    double getInitialB() const;
+    void setInitialB(Eigen::Matrix<double, 2, 2> aDeter, Eigen::Matrix<double, 2, 1> bDeter);
 
-    float getInitialC() const;
-    void setInitialC(Eigen::Matrix<float, 2, 2> a, Eigen::Matrix<float, 2, 1> b, float iniB);
+    double getInitialC() const;
+    void setInitialC(Eigen::Matrix<double, 2, 2> a, Eigen::Matrix<double, 2, 1> b, double iniB);
 
-    Eigen::Matrix<float, 2, 2> getA() const;
-    void setA(QVector<float> X);
+    Eigen::Matrix<double, 2, 2> getA() const;
+    void setA(QVector<double> X);
 
-    Eigen::Matrix<float, 2, 1> getB() const;
-    void setB(QVector<float> X, QVector<float> Y);
+    Eigen::Matrix<double, 2, 1> getB() const;
+    void setB(QVector<double> X, QVector<double> Y);
 
-    QVector<float> getInitialValue() const;
-    void setInitialValue(const float &A, const float &B,const float &C,const float &D);
+    QVector<double> getInitialValue() const;
+    void setInitialValue(const double &A, const double &B,const double &C,const double &D);
 };
 
 #endif // FOURPLINITIALVALUE_H

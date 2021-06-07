@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <fourplinitialvalue.h>
+#include <fourparameterfunction.h>
 
 
 
@@ -195,11 +196,11 @@ void MainWindow::addgroup()
 
 
     //    计算分组复空的均值
-    QList<float> Qll;
+    QList<double> Qll;
     for (int j = 0; j < cc ; ++j) {
-        float sum = 0;
+        double sum = 0;
         for (int i = 0; i < rc; ++i) {
-            float tmp =  ui->tableWidget_excel->item(i+r, j+c)->text().toDouble();
+            double tmp =  ui->tableWidget_excel->item(i+r, j+c)->text().toDouble();
             sum += tmp;
         }
         sum = sum/rc;
@@ -208,8 +209,8 @@ void MainWindow::addgroup()
     }
     //根据药物的起始浓度S_value,计算在D_value稀释倍数下的药物稀释梯度
 
-    QList<float> DrugValue;
-    float DS_value = S_Value_d;
+    QList<double> DrugValue;
+    double DS_value = S_Value_d;
     for (int j = 0; j < cc; j ++) {
         DrugValue.push_back(DS_value);
         DS_value /= D_Value_d;
@@ -252,28 +253,37 @@ void MainWindow::rename()
 void MainWindow::on_dataFit_btn_clicked()
 {
     int rc = qtw.at(0)->rowCount();
-    QVector<float> vecMean;
+    QVector<double> vecMean;
     for (int i = 0;i < rc; i++) {
         try {
             if(qtw.at(0)->item(i,1)!=nullptr){
-                float tmp = qtw.at(0)->item(i,1)->text().toDouble();
+                double tmp = qtw.at(0)->item(i,1)->text().toDouble();
                 vecMean.push_back(tmp);
             }
         } catch (...) {
         }
     }
-    QVector<float> vecDilutionSeries;
+    QVector<double> vecDilutionSeries;
     for (int i = 0;i < rc; i++) {
         if(qtw.at(0)->item(i,2)!=nullptr){
-            float tmp = qtw.at(0)->item(i,2)->text().toDouble();
+            double tmp = qtw.at(0)->item(i,2)->text().toDouble();
             vecDilutionSeries.push_back(tmp);
         }
     }
     qDebug()<<vecMean;
     qDebug()<<vecDilutionSeries;
-    FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean, vecDilutionSeries);
+    FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
 
     qDebug()<<initialValue->getInitialValue() ;
+    FourParameterFunction *FPF = new FourParameterFunction();
+    FPF->JocabiMatrix(vecDilutionSeries,
+                      initialValue->getInitialA(),
+                      initialValue->getInitialB(),
+                      initialValue->getInitialC(),
+                      initialValue->getInitialD());
+//    FPF->JocabiMatrix(vecDilutionSeries,initialValue->getInitialA(),initialValue->getInitialB(),initialValue->getInitialC(),initialValue->getInitialD());
+
+
 
 }
 //将分组数据展示在后面表格中
