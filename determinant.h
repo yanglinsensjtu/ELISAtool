@@ -1,7 +1,7 @@
 #ifndef DETERMINANT_H
 #define DETERMINANT_H
 #include <QVector>
-#include <Eigen/Core>
+#include <Eigen/Dense>
 
 class Determinant
 {

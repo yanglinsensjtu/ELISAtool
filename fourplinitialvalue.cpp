@@ -1,7 +1,7 @@
 #include "fourplinitialvalue.h"
 #include <cmath>
 #include <algorithm>
-#include <Eigen/Core>
+#include <Eigen/Dense>
 #include "determinant.h"
 #include <QDebug>
 #include <stdio.h>

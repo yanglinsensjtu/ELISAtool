@@ -1,7 +1,7 @@
 #ifndef FOURPARAMETERFUNCTION_H
 #define FOURPARAMETERFUNCTION_H
 #include <QVector>
-#include <Eigen/Core>
+#include <Eigen/Dense>
 
 class FourParameterFunction
 {
@@ -28,7 +28,7 @@ public:
     QVector<double> PartialerivativeD(QVector<double> xVector,
                                       double B,
                                       double C);
-    Eigen::MatrixX4d JocabiMatrix(QVector<double> xVecotr,
+    Eigen::MatrixXd JocabiMatrix(QVector<double> xVecotr,
                                  double A,
                                  double B,
                                  double C,

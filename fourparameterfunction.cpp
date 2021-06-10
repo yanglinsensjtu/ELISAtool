@@ -18,6 +18,7 @@ QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector
     QVector<double> yVector;
     for (int i = 0; i < xVector.size(); i++)
     {
+//        D+(A-D)/(1+(x/C)^B)
         yVector.push_back(D+(A-D)/(1+pow((xVector.at(i)/C),B)));
     }
     return yVector;
@@ -84,7 +85,7 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
 }
 
 //四参数方程的雅克比矩阵
-Eigen::MatrixX4d FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
+Eigen::MatrixXd FourParameterFunction::JocabiMatrix(QVector<double> xVecotr, double A, double B, double C, double D)
 {
     QVector<double> PA = PartialerivativeA(xVecotr,B,C);
     QVector<double> PB = PartialerivativeB(xVecotr,A,B,C,D);

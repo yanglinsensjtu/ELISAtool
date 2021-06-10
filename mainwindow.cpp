@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QVector>
-#include "Eigen/Core"
+#include <Eigen/Dense>
 #include <iostream>
 #include <QRegExp>
 #include <QDoubleValidator>
@@ -13,8 +13,10 @@
 #include <math.h>
 #include <fourplinitialvalue.h>
 #include <fourparameterfunction.h>
+#include <algorithm>
 
-
+using namespace Eigen;
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -270,19 +272,37 @@ void MainWindow::on_dataFit_btn_clicked()
             vecDilutionSeries.push_back(tmp);
         }
     }
-    qDebug()<<vecMean;
-    qDebug()<<vecDilutionSeries;
+//    qDebug()<<vecMean;
+//    qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
 
-    qDebug()<<initialValue->getInitialValue() ;
+//    qDebug()<<initialValue->getInitialValue() ;
     FourParameterFunction *FPF = new FourParameterFunction();
 
-
-   std::cout<< FPF->JocabiMatrix(vecDilutionSeries,
-                                 initialValue->getInitialA(),
-                                 initialValue->getInitialB(),
-                                 initialValue->getInitialC(),
-                                 initialValue->getInitialD()) << std::endl;
+    MatrixXd JD = FPF->JocabiMatrix(vecDilutionSeries,
+                                    initialValue->getInitialA(),
+                                    initialValue->getInitialB(),
+                                    initialValue->getInitialC(),
+                                    initialValue->getInitialD());
+    QVector<double> f = FPF->Partialerivative(vecDilutionSeries,
+                                              initialValue->getInitialA(),
+                                              initialValue->getInitialB(),
+                                              initialValue->getInitialC(),
+                                              initialValue->getInitialD());
+//    qDebug() << f;
+    VectorXd fD;
+    fD.resize(f.size());
+    for (int i = 0;i < f.size(); i++) {
+        fD(i) = f.at(i);
+    }
+    MatrixXd JTJ = JD.transpose()*JD;
+    MatrixXd JTf = JD.transpose()*fD;
+//    cout << JTJ.rows() << "x" << JTJ.cols() <<endl;
+    QVector<double> AII;
+    for (int i = 0;i < JTJ.rows(); i++) {
+        AII.push_back(JTJ(i,i));
+    }
+    qDebug()<< *max_element(AII.begin(),AII.end()) << AII;
 
     //    FPF->JocabiMatrix(vecDilutionSeries,initialValue->getInitialA(),initialValue->getInitialB(),initialValue->getInitialC(),initialValue->getInitialD());
 

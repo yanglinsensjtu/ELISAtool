@@ -1,7 +1,7 @@
 #ifndef FOURPLINITIALVALUE_H
 #define FOURPLINITIALVALUE_H
 #include <QVector>
-#include <Eigen/Core>
+#include <Eigen/Dense>
 
 class FourPLInitialValue
 {

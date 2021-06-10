@@ -19,7 +19,6 @@ SOURCES += \
     determinant.cpp \
     fourparameterfunction.cpp \
     fourplinitialvalue.cpp \
-    levenbergmarquardt.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -27,7 +26,6 @@ HEADERS += \
     determinant.h \
     fourparameterfunction.h \
     fourplinitialvalue.h \
-    levenbergmarquardt.h \
     mainwindow.h
 
 FORMS += \

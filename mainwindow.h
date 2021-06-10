@@ -5,7 +5,7 @@
 #include "determinant.h"
 #include <QPoint>
 #include <QMouseEvent>
-#include <Eigen/Core>
+#include <Eigen/Dense>
 #include <QTableWidget>
 
 QT_BEGIN_NAMESPACE
