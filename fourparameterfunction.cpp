@@ -9,7 +9,7 @@ FourParameterFunction::FourParameterFunction()
 }
 //four pararmeter logitic function
 
-QVector<double>  FourParameterFunction::Partialerivative(QVector<double> xVector,
+QVector<double>  FourParameterFunction::FourPLFunction(QVector<double> xVector,
                                                          double A,
                                                          double B,
                                                          double C,

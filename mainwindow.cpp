@@ -284,7 +284,7 @@ void MainWindow::on_dataFit_btn_clicked()
                                     initialValue->getInitialB(),
                                     initialValue->getInitialC(),
                                     initialValue->getInitialD());
-    QVector<double> f = FPF->Partialerivative(vecDilutionSeries,
+    QVector<double> f = FPF->FourPLFunction(vecDilutionSeries,
                                               initialValue->getInitialA(),
                                               initialValue->getInitialB(),
                                               initialValue->getInitialC(),

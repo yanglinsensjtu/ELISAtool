@@ -7,7 +7,7 @@ class FourParameterFunction
 {
 public:
 
-    QVector<double> Partialerivative(QVector<double> xVector,
+    QVector<double> FourPLFunction(QVector<double> xVector,
                                       double A,
                                       double B,
                                       double C,
