@@ -19,6 +19,7 @@ public:
 
 
     LevenbergMarquarelt();
+    LevenbergMarquarelt(QVector<double> X, QVector<double> Y, double A, double B,double C, double D);
     ~LevenbergMarquarelt();
     VectorXd Solve();
     VectorXd LM();

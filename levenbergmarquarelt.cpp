@@ -91,9 +91,17 @@ void LevenbergMarquarelt::setG()
     MatrixXd g_tmp = this->J_.transpose()*this->Ep_;
     g_ = g_tmp;
 }
-LevenbergMarquarelt::LevenbergMarquarelt()
+LevenbergMarquarelt::LevenbergMarquarelt(QVector<double> X, QVector<double> Y, double A, double B, double C, double D)
 {
-    
+    this->Xd = X;
+    this->Yd = Y;
+    this->setPo(A,B,C,D);
+    this->setJ(X,A,B,C,D);
+    this->setA();
+    this->setEp(X,Y,A,B,C,D);
+    this->setG();
+    this->setMu();
+
 }
 
 VectorXd LevenbergMarquarelt::Solve()
