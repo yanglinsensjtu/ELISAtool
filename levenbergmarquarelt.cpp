@@ -1,11 +1,14 @@
 #include "levenbergmarquarelt.h"
 #include "fourparameterfunction.h"
 #include <Eigen/Dense>
-#include "fourparameterfunction.h"
 #include "fourplinitialvalue.h"
 #include <algorithm>
 #include <math.h>
 #include <numeric>
+#include <QDebug>
+#include <iostream>
+
+
 
 using namespace std;
 using namespace Eigen;
@@ -17,7 +20,7 @@ MatrixXd LevenbergMarquarelt::A() const
 
 void LevenbergMarquarelt::setA()
 {
-    MatrixXd A_tmp = this->J_.transpose()*this->J_;
+    Matrix4d A_tmp = this->J_.transpose()*this->J_;
     A_ = A_tmp;
 }
 
@@ -29,7 +32,9 @@ MatrixXd LevenbergMarquarelt::J() const
 void LevenbergMarquarelt::setJ(QVector<double> vec, double A, double B, double C, double D)
 {
     FourParameterFunction *FPF = new FourParameterFunction();
-    MatrixXd J_tmp = FPF->JocabiMatrix(vec, A, B, C, D);
+    MatrixXd J_tmp;
+    J_tmp.resize(vec.size(), 4);
+    J_tmp = FPF->JocabiMatrix(vec, A, B, C, D);
     J_ = J_tmp;
 }
 
@@ -57,12 +62,12 @@ void LevenbergMarquarelt::setEp(QVector<double> Xd, QVector<double> Yd, double A
     for(int i = 0; i < Yd.size(); i++){
         Ep_tmp.push_back(Yd.at(i) - Yd_.at(i));
     }
-
-    Ep_.resize(Ep_tmp.size(),1);
-    for(int i = 0; i < Yd.size(); i++){
-        Ep_(i, 1) = Ep_tmp.at(i);
+    VectorXd Ep_tmp_;
+    Ep_tmp_.resize(Ep_tmp.size(),1);
+    for(int i = 0; i < Ep_tmp.size(); i++){
+        Ep_tmp_(i, 0) = Ep_tmp.at(i);
     }
-
+    Ep_ = Ep_tmp_;
 }
 
 double LevenbergMarquarelt::getMu() const
@@ -81,16 +86,21 @@ void LevenbergMarquarelt::setMu()
     mu = mu_tmp;
 }
 
-MatrixXd LevenbergMarquarelt::getG() const
+VectorXd LevenbergMarquarelt::getG() const
 {
     return g_;
 }
 
 void LevenbergMarquarelt::setG()
 {
-    MatrixXd g_tmp = this->J_.transpose()*this->Ep_;
+    Vector4d g_tmp = this->J_.transpose()*this->Ep_;
     g_ = g_tmp;
 }
+LevenbergMarquarelt::LevenbergMarquarelt()
+{
+
+}
+
 LevenbergMarquarelt::LevenbergMarquarelt(QVector<double> X, QVector<double> Y, double A, double B, double C, double D)
 {
     this->Xd = X;
@@ -101,51 +111,102 @@ LevenbergMarquarelt::LevenbergMarquarelt(QVector<double> X, QVector<double> Y, d
     this->setEp(X,Y,A,B,C,D);
     this->setG();
     this->setMu();
+    this->Solve();
 
 }
 
 VectorXd LevenbergMarquarelt::Solve()
 {
-    MatrixXd L_matrix = this->A_ +this->mu* (MatrixXd::Identity(this->A_.rows(), this->A_.cols()));
-    this->deltaP = L_matrix.inverse()*(-this->g_);
-    return this->deltaP;
+//    cout << this->A_<< endl;
+//    cout << this->mu<< endl;
+//    cout << this->g_ << endl;
+//    cout << -this->g_ << endl;
+
+//    cout << MatrixXd::Identity(this->A_.rows(), this->A_.cols()) << endl;
+
+
+    Matrix4d L_matrix = this->A_ +this->mu* (MatrixXd::Identity(this->A_.rows(), this->A_.cols()));
+//    cout << L_matrix << endl;
+//    cout << L_matrix.inverse()*L_matrix << endl;
+    Vector4d delta_tmp;
+    delta_tmp = L_matrix.inverse()*(this->g_);
+    this->deltaP = delta_tmp;
+    return delta_tmp;
 }
 
 VectorXd LevenbergMarquarelt::LM()
 {
     FourParameterFunction *FPF = new FourParameterFunction();
+    this->P = this->Po_;
     this->stop = this->infinite_norm(this->g_) <= this->e1;
-    double mu = this->mu;
+
     while (!stop && this->k < this->k_max) {
-        k++;
+        //        qDebug()<<k;
+        this->k++;
         this->Solve();
-        this->P = this->Po_;
-        if(this->two_norm(this->deltaP) <= this->two_norm(this->P)){
+//        cout << this->Solve() << endl;
+        cout << "******"<<endl;
+        //        qDebug() << this->two_norm(this->deltaP);
+        //        qDebug() << this->two_norm(this->P);
+        if(this->two_norm(this->deltaP) <= this->e2*this->two_norm(this->P)){
             this->stop = true;
         }else {
-            VectorXd P_new = this->P + this->deltaP;
-            VectorXd Ep_update = this->Ep(this->Xd,
-                                          this->Yd,
-                                          P_new(0),
-                                          P_new(1),
-                                          P_new(2),
-                                          P_new(3));
-            this->rho = (pow(this->two_norm(this->Ep_), 2) -
-                         pow(this->two_norm(Ep_update), 2)) /
-                    (this->deltaP.transpose()*(mu*this->deltaP + this->g_));
+
+
+            Vector4d P_new = this->P + this->deltaP;
+            this->P = P_new;
+            cout<< this->P <<endl;
+//            cout << "******"<<endl;
+            VectorXd Ep_up;
+            Ep_up.resize(this->Ep_.rows(),1);
+            Ep_up = this->Ep_update(this->Xd,
+                                    this->Yd,
+                                    P_new(0,0),
+                                    P_new(1,0),
+                                    P_new(2,0),
+                                    P_new(3,0));
+
+
+//            MatrixXd J_tmp;
+//            J_tmp.resize(this->J_.rows(), 4);
+//            J_tmp  = FPF->JocabiMatrix(this->Xd,
+//                                       P_new(0,0),
+//                                       P_new(1,0),
+//                                       P_new(2,0),
+//                                       P_new(3,0));
+
+//            this->A_ = J_tmp.transpose()*J_tmp;
+//            this->g_ = J_tmp.transpose()*Ep_up;
+
+            //            cout << Ep_update << endl;
+            //            cout << this->Ep_ << endl;
+            //            qDebug() << pow(this->two_norm(this->Ep_), 2);
+            //            qDebug() << pow(this->two_norm(Ep_update), 2);
+            //            qDebug() << this->deltaP.transpose()*(mu*this->deltaP + this->g_);
+
+            this->rho =((pow(this->two_norm(this->Ep_), 2) - pow(this->two_norm(Ep_up), 2))) /
+                    ((this->deltaP.transpose()*(this->mu*this->deltaP + this->g_)));
+                        qDebug() << rho;
             if(rho > 0){
                 this -> P = P_new;
-                MatrixXd J_tmp = FPF->JocabiMatrix(this->Xd, this->P(0),this->P(1),this->P(2),this->P(3));
+                MatrixXd J_tmp;
+                J_tmp.resize(this->J_.rows(), 4);
+                J_tmp  = FPF->JocabiMatrix(this->Xd,
+                                           this->P(0,0),
+                                           this->P(1,0),
+                                           this->P(2,0),
+                                           this->P(3,0));
                 this->A_ = J_tmp.transpose()*J_tmp;
                 VectorXd update_EP;
-                update_EP = this->Ep(this->Xd,
-                                     this->Yd,
-                                     this->P(0),
-                                     this->P(1),
-                                     this->P(2),
-                                     this->P(3));
-                this->g_ = this->g_.transpose()*update_EP;
-                this->stop = (this->infinite_norm(this->g_) <= this->e1) || (pow(this->two_norm(update_EP),2) <= this->e3);
+                update_EP.resize(this->Xd.size(), 1);
+                update_EP = this->Ep_update(this->Xd,
+                                            this->Yd,
+                                            this->P(0,0),
+                                            this->P(1,0),
+                                            this->P(2,0),
+                                            this->P(3,0));
+                this->g_ = J_tmp.transpose()*update_EP;
+                this->stop = (this->infinite_norm(this->g_) <= this->e1) ||((pow(this->two_norm(update_EP),2) <= this->e3));
                 double max_number;
                 if(1/3 < (1 - pow((this->rho*2 - 1), 3))){
                     max_number = 1 - pow((this->rho*2 - 1), 3);
@@ -160,27 +221,45 @@ VectorXd LevenbergMarquarelt::LM()
                 this->v = this->v * 2;
             }
         }
-        if(this->rho > 0 || this->stop)
-            break;
+        //        if(this->rho > 0 || this->stop)
+        //            break;
+//        cout << this->P<<endl;
 
     }
     return this->P;
 }
 
-VectorXd LevenbergMarquarelt::Ep(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D)
+VectorXd LevenbergMarquarelt::Ep_update(QVector<double> Xd,
+                                        QVector<double> Yd,
+                                        double A,
+                                        double B,
+                                        double C,
+                                        double D)
 {
     FourParameterFunction *FPF = new FourParameterFunction();
-    QVector<double> Yd_ = FPF->FourPLFunction(Xd, A, B, C, D);
+    QVector<double> Yd_ = FPF->FourPLFunction(Xd,A,B,C,D);
     QVector<double> Ep_tmp;
     for(int i = 0; i < Yd.size(); i++){
         Ep_tmp.push_back(Yd.at(i) - Yd_.at(i));
     }
-    VectorXd Ep_update;
-    Ep_update.resize(Ep_tmp.size(),1);
-    for(int i = 0; i < Yd.size(); i++){
-        Ep_(i, 1) = Ep_tmp.at(i);
+    VectorXd Ep_tmp_;
+    Ep_tmp_.resize(Ep_tmp.size(),1);
+    for(int i = 0; i < Ep_tmp.size(); i++){
+        Ep_tmp_(i, 0) = Ep_tmp.at(i);
     }
-    return Ep_update;
+    return Ep_tmp_;
+    //    FourParameterFunction *FPF = new FourParameterFunction();
+    //    QVector<double> Yd_ = FPF->FourPLFunction(Xd, A, B, C, D);
+    //    QVector<double> Ep_tmp;
+    //    for(int i = 0; i < Yd.size(); i++){
+    //        Ep_tmp.push_back(Yd.at(i) - Yd_.at(i));
+    //    }
+    //    VectorXd Ep_update;
+    //    Ep_update.resize(Yd.size(),1);
+    //    for(int i = 0; i < Yd.size(); i++){
+    //        Ep_update(i, 0) = Ep_tmp.at(i);
+    //    }
+    //    return Ep_update;
 }
 
 double LevenbergMarquarelt::infinite_norm(MatrixXd g_)
@@ -189,8 +268,8 @@ double LevenbergMarquarelt::infinite_norm(MatrixXd g_)
     QVector<double> tmp;
     for(int i= 0; i < g_.rows(); i++ ){
         for(int j = 0; j < g_.cols(); j++){
-           double num = abs(g_(i,j));
-           tmp.push_back(num);
+            double num = abs(g_(i,j));
+            tmp.push_back(num);
         }
     }
     max = *max_element(tmp.begin(),tmp.end());
@@ -203,13 +282,14 @@ double LevenbergMarquarelt::two_norm(MatrixXd g_)
     QVector<double> tmp;
     for(int i= 0; i < g_.rows(); i++ ){
         for(int j = 0; j < g_.cols(); j++){
-           double num = pow(g_(i,j),2);
-           tmp.push_back(num);
+            double num = pow(g_(i,j),2);
+            tmp.push_back(num);
         }
     }
-    sum = accumulate(tmp.begin(),tmp.end(),0.0);
+    sum = pow(accumulate(tmp.begin(),tmp.end(),0.0),0.5);
     return sum;
 }
+
 
 
 

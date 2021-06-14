@@ -14,6 +14,7 @@
 #include <fourplinitialvalue.h>
 #include <fourparameterfunction.h>
 #include <algorithm>
+#include <levenbergmarquarelt.h>
 
 using namespace Eigen;
 using namespace std;
@@ -272,41 +273,60 @@ void MainWindow::on_dataFit_btn_clicked()
             vecDilutionSeries.push_back(tmp);
         }
     }
-//    qDebug()<<vecMean;
-//    qDebug()<<vecDilutionSeries;
+        qDebug()<<vecMean;
+        qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
-
-//    qDebug()<<initialValue->getInitialValue() ;
-    FourParameterFunction *FPF = new FourParameterFunction();
-
-    MatrixXd JD = FPF->JocabiMatrix(vecDilutionSeries,
-                                    initialValue->getInitialA(),
-                                    initialValue->getInitialB(),
-                                    initialValue->getInitialC(),
-                                    initialValue->getInitialD());
-    QVector<double> f = FPF->FourPLFunction(vecDilutionSeries,
-                                              initialValue->getInitialA(),
-                                              initialValue->getInitialB(),
-                                              initialValue->getInitialC(),
-                                              initialValue->getInitialD());
-//    qDebug() << f;
-    VectorXd fD;
-    fD.resize(f.size());
-    for (int i = 0;i < f.size(); i++) {
-        fD(i) = f.at(i);
-    }
-    MatrixXd JTJ = JD.transpose()*JD;
-    MatrixXd JTf = JD.transpose()*fD;
-//    cout << JTJ.rows() << "x" << JTJ.cols() <<endl;
-    QVector<double> AII;
-    for (int i = 0;i < JTJ.rows(); i++) {
-        AII.push_back(JTJ(i,i));
-    }
-    qDebug()<< *max_element(AII.begin(),AII.end()) << AII;
-
-    //    FPF->JocabiMatrix(vecDilutionSeries,initialValue->getInitialA(),initialValue->getInitialB(),initialValue->getInitialC(),initialValue->getInitialD());
+//    FourParameterFunction *FPF = new FourParameterFunction();
 
 
+    LevenbergMarquarelt *LM = new LevenbergMarquarelt(vecDilutionSeries,vecMean,
+                                                      initialValue->getInitialA(),
+                                                      initialValue->getInitialB(),
+                                                      initialValue->getInitialC(),
+                                                      initialValue->getInitialD());
+//    cout << LM->Ep_update(vecDilutionSeries,vecMean,
+//                          initialValue->getInitialA(),
+//                          initialValue->getInitialB(),
+//                          initialValue->getInitialC(),
+//                          initialValue->getInitialD()) << endl;
+//    cout <<  << endl;
+    cout << LM->LM() << endl;
+     cout << LM->Po() << endl;
+
+//    LevenbergMarquarelt *LM = new LevenbergMarquarelt();
+//    LM->setJ(vecDilutionSeries,
+//             initialValue->getInitialA(),
+//             initialValue->getInitialB(),
+//             initialValue->getInitialC(),
+//             initialValue->getInitialD());
+
+//   MatrixXd j  = LM->J();
+//   LM->setA();
+//   LM->setPo(initialValue->getInitialA(),
+//               initialValue->getInitialB(),
+//               initialValue->getInitialC(),
+//               initialValue->getInitialD());
+
+
+//   LM->setEp(vecDilutionSeries,
+//             vecMean,
+//             initialValue->getInitialA(),
+//             initialValue->getInitialB(),
+//             initialValue->getInitialC(),
+//             initialValue->getInitialD());
+//   cout << LM->infinite_norm(LM->Ep()) << "  "<<LM->Ep().lpNorm<Infinity>() << endl;
+//   LM->setG();
+//   LM->setMu();
+
+//   cout << LM->getMu() << endl;
+
+//    LM->setJ(vecDilutionSeries,
+//             initialValue->getInitialA(),
+//             initialValue->getInitialB(),
+//             initialValue->getInitialC(),
+//             initialValue->getInitialD());
+//    cout << LM->J() <<endl;
+//    cout << LM->Solve() <<endl;
 
 }
 //将分组数据展示在后面表格中

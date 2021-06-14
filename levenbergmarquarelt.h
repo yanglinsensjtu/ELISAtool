@@ -7,11 +7,24 @@ using namespace Eigen;
 class LevenbergMarquarelt
 {
 private:
-    QVector<double> Yd, Xd;
-    MatrixXd A_, g_, J_;
-    int k = 0 , k_max = 100, v = 2;
-    VectorXd P, Po_, Ep_, deltaP;
-    double e1 = 1e-15, e2 = 1e-15,e3 = 1e-15, rho, mu, tao = 1e-3;
+    QVector<double> Yd;
+    QVector<double> Xd;
+    MatrixXd A_;
+    VectorXd g_;
+    MatrixXd J_;
+    int k = 0 ;
+    int k_max = 100;
+    int v = 2;
+    Vector4d P;
+    Vector4d Po_;
+    VectorXd Ep_;
+    Vector4d deltaP;
+    double e1 = 1e-15;
+    double e2 = 1e-15;
+    double e3 = 1e-15;
+    double rho;
+    double mu;
+    double tao = 1e-3;
     bool stop;
 
 
@@ -23,7 +36,8 @@ public:
     ~LevenbergMarquarelt();
     VectorXd Solve();
     VectorXd LM();
-    VectorXd Ep(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D);
+    VectorXd Ep_update(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D);
+
     double infinite_norm(MatrixXd g_);
     double two_norm(MatrixXd g_);
     MatrixXd A() const;
@@ -36,7 +50,7 @@ public:
     void setEp(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D);
     double getMu() const;
     void setMu();
-    MatrixXd getG() const;
+    VectorXd getG() const;
     void setG();
 };
 
