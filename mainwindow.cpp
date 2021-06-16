@@ -291,7 +291,7 @@ void MainWindow::on_dataFit_btn_clicked()
 //                          initialValue->getInitialD()) << endl;
 //    cout <<  << endl;
     cout << LM->LM() << endl;
-     cout << LM->Po() << endl;
+//     cout << LM->Po() << endl;
 
 //    LevenbergMarquarelt *LM = new LevenbergMarquarelt();
 //    LM->setJ(vecDilutionSeries,

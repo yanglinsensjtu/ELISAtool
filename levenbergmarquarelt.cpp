@@ -111,7 +111,7 @@ LevenbergMarquarelt::LevenbergMarquarelt(QVector<double> X, QVector<double> Y, d
     this->setEp(X,Y,A,B,C,D);
     this->setG();
     this->setMu();
-    this->Solve();
+
 
 }
 
@@ -129,7 +129,7 @@ VectorXd LevenbergMarquarelt::Solve()
 //    cout << L_matrix << endl;
 //    cout << L_matrix.inverse()*L_matrix << endl;
     Vector4d delta_tmp;
-    delta_tmp = L_matrix.inverse()*(this->g_);
+    delta_tmp = L_matrix.inverse()*(-this->g_);
     this->deltaP = delta_tmp;
     return delta_tmp;
 }
@@ -141,24 +141,27 @@ VectorXd LevenbergMarquarelt::LM()
     this->stop = this->infinite_norm(this->g_) <= this->e1;
 
     while (!stop && this->k < this->k_max) {
-        //        qDebug()<<k;
+                qDebug()<<k;
         this->k++;
         this->Solve();
 //        cout << this->Solve() << endl;
         cout << "******"<<endl;
         //        qDebug() << this->two_norm(this->deltaP);
         //        qDebug() << this->two_norm(this->P);
-        if(this->two_norm(this->deltaP) <= this->e2*this->two_norm(this->P)){
+        if(this->two_norm(this->deltaP) <= this->e2*(this->two_norm(this->P) + this->e2)){
             this->stop = true;
         }else {
 
 
-            Vector4d P_new = this->P + this->deltaP;
+            Vector4d P_new = this->P - this->deltaP;
+
+
+
             this->P = P_new;
-            cout<< this->P <<endl;
+//            cout<< this->P <<endl;
 //            cout << "******"<<endl;
             VectorXd Ep_up;
-            Ep_up.resize(this->Ep_.rows(),1);
+            Ep_up.resize(this->Xd.size(),1);
             Ep_up = this->Ep_update(this->Xd,
                                     this->Yd,
                                     P_new(0,0),
@@ -166,6 +169,11 @@ VectorXd LevenbergMarquarelt::LM()
                                     P_new(2,0),
                                     P_new(3,0));
 
+//            cout << "P_new" << endl;
+//            cout << Ep_up << endl;
+
+
+//            cout << "P_new" << endl;
 
 //            MatrixXd J_tmp;
 //            J_tmp.resize(this->J_.rows(), 4);
@@ -184,8 +192,13 @@ VectorXd LevenbergMarquarelt::LM()
             //            qDebug() << pow(this->two_norm(Ep_update), 2);
             //            qDebug() << this->deltaP.transpose()*(mu*this->deltaP + this->g_);
 
-            this->rho =((pow(this->two_norm(this->Ep_), 2) - pow(this->two_norm(Ep_up), 2))) /
-                    ((this->deltaP.transpose()*(this->mu*this->deltaP + this->g_)));
+            this->rho =(this->two_norm(this->Ep_) - this->two_norm(Ep_up)) /
+                    (this->deltaP.transpose()*(this->mu*this->deltaP - this->g_));
+
+//            cout << "this->deltaP.transpose()*(this->mu*this->deltaP - this->g_)" <<endl;
+//            cout << this->two_norm(Ep_up)  <<endl;
+//            cout << this->deltaP.transpose()*(this->mu*this->deltaP - this->g_) <<endl;
+//            cout << "this->deltaP.transpose()*(this->mu*this->deltaP - this->g_)" <<endl;
                         qDebug() << rho;
             if(rho > 0){
                 this -> P = P_new;
@@ -206,7 +219,7 @@ VectorXd LevenbergMarquarelt::LM()
                                             this->P(2,0),
                                             this->P(3,0));
                 this->g_ = J_tmp.transpose()*update_EP;
-                this->stop = (this->infinite_norm(this->g_) <= this->e1) ||((pow(this->two_norm(update_EP),2) <= this->e3));
+                this->stop = (this->infinite_norm(this->g_) <= this->e1);
                 double max_number;
                 if(1/3 < (1 - pow((this->rho*2 - 1), 3))){
                     max_number = 1 - pow((this->rho*2 - 1), 3);
