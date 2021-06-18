@@ -129,6 +129,7 @@ VectorXd LevenbergMarquarelt::Solve()
 //    cout << L_matrix << endl;
 //    cout << L_matrix.inverse()*L_matrix << endl;
     Vector4d delta_tmp;
+//    delta_tmp = L_matrix.ldlt().solve(-this->g_);
     delta_tmp = L_matrix.inverse()*(-this->g_);
     this->deltaP = delta_tmp;
     return delta_tmp;
@@ -153,11 +154,11 @@ VectorXd LevenbergMarquarelt::LM()
         }else {
 
 
-            Vector4d P_new = this->P - this->deltaP;
+            Vector4d P_new = this->P + this->deltaP;
 
 
 
-            this->P = P_new;
+//            this->P = P_new;
 //            cout<< this->P <<endl;
 //            cout << "******"<<endl;
             VectorXd Ep_up;
@@ -193,7 +194,7 @@ VectorXd LevenbergMarquarelt::LM()
             //            qDebug() << this->deltaP.transpose()*(mu*this->deltaP + this->g_);
 
             this->rho =(this->two_norm(this->Ep_) - this->two_norm(Ep_up)) /
-                    (this->deltaP.transpose()*(this->mu*this->deltaP - this->g_));
+                   (0.5*this->deltaP.transpose()*(this->mu*this->deltaP - this->g_));
 
 //            cout << "this->deltaP.transpose()*(this->mu*this->deltaP - this->g_)" <<endl;
 //            cout << this->two_norm(Ep_up)  <<endl;
@@ -202,23 +203,20 @@ VectorXd LevenbergMarquarelt::LM()
                         qDebug() << rho;
             if(rho > 0){
                 this -> P = P_new;
-                MatrixXd J_tmp;
-                J_tmp.resize(this->J_.rows(), 4);
-                J_tmp  = FPF->JocabiMatrix(this->Xd,
-                                           this->P(0,0),
-                                           this->P(1,0),
-                                           this->P(2,0),
-                                           this->P(3,0));
-                this->A_ = J_tmp.transpose()*J_tmp;
-                VectorXd update_EP;
-                update_EP.resize(this->Xd.size(), 1);
-                update_EP = this->Ep_update(this->Xd,
-                                            this->Yd,
-                                            this->P(0,0),
-                                            this->P(1,0),
-                                            this->P(2,0),
-                                            this->P(3,0));
-                this->g_ = J_tmp.transpose()*update_EP;
+                this->setJ(this->Xd,
+                           P_new(0,0),
+                           P_new(1,0),
+                           P_new(2,0),
+                           P_new(3,0));
+                this->setA();
+                this->setEp(this->Xd,
+                            this->Yd,
+                            P_new(0,0),
+                            P_new(1,0),
+                            P_new(2,0),
+                            P_new(3,0));
+                this->setG();
+
                 this->stop = (this->infinite_norm(this->g_) <= this->e1);
                 double max_number;
                 if(1/3 < (1 - pow((this->rho*2 - 1), 3))){

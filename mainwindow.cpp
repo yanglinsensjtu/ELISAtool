@@ -15,6 +15,7 @@
 #include <fourparameterfunction.h>
 #include <algorithm>
 #include <levenbergmarquarelt.h>
+#include <lmmethod.h>
 
 using namespace Eigen;
 using namespace std;
@@ -276,21 +277,33 @@ void MainWindow::on_dataFit_btn_clicked()
         qDebug()<<vecMean;
         qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
+    LMmethod *LM = new LMmethod();
+    cout << LM->LM(vecDilutionSeries,vecMean,
+                   100,
+                   100,
+                   300,
+                   200);
+
 //    FourParameterFunction *FPF = new FourParameterFunction();
 
 
-    LevenbergMarquarelt *LM = new LevenbergMarquarelt(vecDilutionSeries,vecMean,
-                                                      initialValue->getInitialA(),
-                                                      initialValue->getInitialB(),
-                                                      initialValue->getInitialC(),
-                                                      initialValue->getInitialD());
+//    LevenbergMarquarelt *LM = new LevenbergMarquarelt(vecDilutionSeries,vecMean,
+//                                                      initialValue->getInitialA(),
+//                                                      initialValue->getInitialB(),
+//                                                      initialValue->getInitialC(),
+//                                                      initialValue->getInitialD());
+//    cout<<FPF->JocabiMatrix(vecDilutionSeries,
+//                      100,
+//                      1,
+//                      5,
+//                      2000)<<endl;
 //    cout << LM->Ep_update(vecDilutionSeries,vecMean,
 //                          initialValue->getInitialA(),
 //                          initialValue->getInitialB(),
 //                          initialValue->getInitialC(),
 //                          initialValue->getInitialD()) << endl;
 //    cout <<  << endl;
-    cout << LM->LM() << endl;
+//    cout << LM->LM() << endl;
 //     cout << LM->Po() << endl;
 
 //    LevenbergMarquarelt *LM = new LevenbergMarquarelt();

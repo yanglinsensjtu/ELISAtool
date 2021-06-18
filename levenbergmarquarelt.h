@@ -37,7 +37,6 @@ public:
     VectorXd Solve();
     VectorXd LM();
     VectorXd Ep_update(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D);
-
     double infinite_norm(MatrixXd g_);
     double two_norm(MatrixXd g_);
     MatrixXd A() const;

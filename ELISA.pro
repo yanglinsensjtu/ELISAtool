@@ -20,6 +20,7 @@ SOURCES += \
     fourparameterfunction.cpp \
     fourplinitialvalue.cpp \
     levenbergmarquarelt.cpp \
+    lmmethod.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -28,6 +29,7 @@ HEADERS += \
     fourparameterfunction.h \
     fourplinitialvalue.h \
     levenbergmarquarelt.h \
+    lmmethod.h \
     mainwindow.h
 
 FORMS += \
