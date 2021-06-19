@@ -1,3 +1,6 @@
+#include <QtCharts/QChartView>
+#include <QtCharts/QSplineSeries>
+using namespace QtCharts;
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
@@ -18,8 +21,10 @@
 #include <lmmethod.h>
 #include <QString>
 
+
 using namespace Eigen;
 using namespace std;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,40 +51,40 @@ MainWindow::MainWindow(QWidget *parent)
     //    M(1,1) = 4;
 
     //    qDebug() << D->calculate(M);
-//        QVector<double> X {2000,
-//                           500,
-//                           125,
-//                           31.25,
-//                           7.813,
-//                           1.953,
-//                           0.488,
-//                           0.122,
-//                           0.031,
-//                           0.008};
-//        QVector<double> Y {
-//            238760.776,
-//            238685.567,
-//            240710.229,
-//            223192.552,
-//            128388.818,
-//            26587.340,
-//            4961.271,
-//            3322.640,
-//            3338.803,
-//            3213.232};
-//        qDebug()<<X;
-//        qDebug()<<Y;
-//       double A =  3.181429e+03;
-//       double B =  1.501060e+00;
-//       double C =  1.658991e+00;
-//       double D =  2.373467e+05;
-//           LMmethod *LM = new LMmethod();
-//           cout << LM->LM(X,
-//                          Y,
-//                          A,
-//                          B,
-//                          C,
-//                          D);
+    //        QVector<double> X {2000,
+    //                           500,
+    //                           125,
+    //                           31.25,
+    //                           7.813,
+    //                           1.953,
+    //                           0.488,
+    //                           0.122,
+    //                           0.031,
+    //                           0.008};
+    //        QVector<double> Y {
+    //            238760.776,
+    //            238685.567,
+    //            240710.229,
+    //            223192.552,
+    //            128388.818,
+    //            26587.340,
+    //            4961.271,
+    //            3322.640,
+    //            3338.803,
+    //            3213.232};
+    //        qDebug()<<X;
+    //        qDebug()<<Y;
+    //       double A =  3.181429e+03;
+    //       double B =  1.501060e+00;
+    //       double C =  1.658991e+00;
+    //       double D =  2.373467e+05;
+    //           LMmethod *LM = new LMmethod();
+    //           cout << LM->LM(X,
+    //                          Y,
+    //                          A,
+    //                          B,
+    //                          C,
+    //                          D);
     //       VectorXd Xm;
     //       Xm.resize(X.size(),1);
 
@@ -316,24 +321,24 @@ void MainWindow::on_dataFit_btn_clicked()
             vecDilutionSeries.push_back(tmp);
         }
     }
-//    qDebug()<<vecMean;
-//    qDebug()<<vecDilutionSeries;
+    //    qDebug()<<vecMean;
+    //    qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
 
-//    qDebug()<< initialValue->getInitialA();
-//    qDebug()<< initialValue->getInitialB();
-//    qDebug()<< initialValue->getInitialC();
-//    qDebug()<< initialValue->getInitialD();
+    //    qDebug()<< initialValue->getInitialA();
+    //    qDebug()<< initialValue->getInitialB();
+    //    qDebug()<< initialValue->getInitialC();
+    //    qDebug()<< initialValue->getInitialD();
 
     LMmethod *LM = new LMmethod();
-//    double A =  3.181429e+03;
-//    double B =  1.501060e+00;
-//    double C =  1.658991e+00;
-//    double D =  2.373467e+05;
-//    double A =  100;
-//    double B =  100;
-//    double C =  100;
-//    double D =  100;
+    //    double A =  3.181429e+03;
+    //    double B =  1.501060e+00;
+    //    double C =  1.658991e+00;
+    //    double D =  2.373467e+05;
+    //    double A =  100;
+    //    double B =  100;
+    //    double C =  100;
+    //    double D =  100;
     MatrixXd ABCD = LM->LM(vecDilutionSeries,
                            vecMean,
                            initialValue->getInitialA(),
@@ -343,22 +348,44 @@ void MainWindow::on_dataFit_btn_clicked()
 
 
 
-//    ui->tableWidget_parameter->setItem(0,0, new QTableWidgetItem(1234));
+    //    ui->tableWidget_parameter->setItem(0,0, new QTableWidgetItem(1234));
     for (int i = 0; i < ABCD.rows();i++) {
         double tmp = ABCD(i,0);
         QString str = QString::number(tmp);
         ui->tableWidget_parameter->setItem(i,0, new QTableWidgetItem(str));
     }
-   double rsq = LM->Rsquare(vecDilutionSeries,
-                vecMean,
-                ABCD(0,0),
-                ABCD(1,0),
-                ABCD(2,0),
-                ABCD(3,0));
+    double rsq = LM->Rsquare(vecDilutionSeries,
+                             vecMean,
+                             ABCD(0,0),
+                             ABCD(1,0),
+                             ABCD(2,0),
+                             ABCD(3,0));
+
 
     QString str = QString::number(rsq);
     ui->tableWidget_parameter->setItem(4,0, new QTableWidgetItem(str));
+    //绘制图表
+    FourParameterFunction *FPF = new FourParameterFunction();
+    QSplineSeries *series = new QSplineSeries();
+    series->setName("spline");
+    QVector<double> Yplotdata = FPF->FourPLFunction(vecDilutionSeries,
+                                                    ABCD(0,0),
+                                                    ABCD(1,0),
+                                                    ABCD(2,0),
+                                                    ABCD(3,0));
+    for (int i = 0; i< Yplotdata.size();i ++) {
+        series->append(log10(vecDilutionSeries.at(i)),Yplotdata.at(i));
+    }
 
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+    chart->addSeries(series);
+    chart->setTitle("D+(A-D)/(1+(x/C)^B)");
+    chart->createDefaultAxes();
+//    chart->axisY()->setRange(0, 10);
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
+    ui->widget_7->setChart(chart);
     //    FourParameterFunction *FPF = new FourParameterFunction();
 
 
