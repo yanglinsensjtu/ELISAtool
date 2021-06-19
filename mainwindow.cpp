@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <levenbergmarquarelt.h>
 #include <lmmethod.h>
+#include <QString>
 
 using namespace Eigen;
 using namespace std;
@@ -315,14 +316,14 @@ void MainWindow::on_dataFit_btn_clicked()
             vecDilutionSeries.push_back(tmp);
         }
     }
-    qDebug()<<vecMean;
-    qDebug()<<vecDilutionSeries;
+//    qDebug()<<vecMean;
+//    qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
 
-    qDebug()<< initialValue->getInitialA();
-    qDebug()<< initialValue->getInitialB();
-    qDebug()<< initialValue->getInitialC();
-    qDebug()<< initialValue->getInitialD();
+//    qDebug()<< initialValue->getInitialA();
+//    qDebug()<< initialValue->getInitialB();
+//    qDebug()<< initialValue->getInitialC();
+//    qDebug()<< initialValue->getInitialD();
 
     LMmethod *LM = new LMmethod();
 //    double A =  3.181429e+03;
@@ -339,7 +340,16 @@ void MainWindow::on_dataFit_btn_clicked()
                            initialValue->getInitialB(),
                            initialValue->getInitialC(),
                            initialValue->getInitialD());
-    cout << ABCD << endl;
+
+
+
+//    ui->tableWidget_parameter->setItem(0,0, new QTableWidgetItem(1234));
+    for (int i = 0; i < ABCD.rows();i++) {
+        double tmp = ABCD(i,0);
+
+        QString str = QString::number(tmp);
+        ui->tableWidget_parameter->setItem(i,0, new QTableWidgetItem(str));
+    }
 
     //    FourParameterFunction *FPF = new FourParameterFunction();
 
