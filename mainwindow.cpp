@@ -1,5 +1,6 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
+#include <QtCharts/QScatterSeries>
 using namespace QtCharts;
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -20,6 +21,7 @@ using namespace QtCharts;
 #include <levenbergmarquarelt.h>
 #include <lmmethod.h>
 #include <QString>
+#include <QColor>
 
 
 using namespace Eigen;
@@ -366,7 +368,10 @@ void MainWindow::on_dataFit_btn_clicked()
     ui->tableWidget_parameter->setItem(4,0, new QTableWidgetItem(str));
     //绘制图表
     FourParameterFunction *FPF = new FourParameterFunction();
+    QScatterSeries *series2 = new QScatterSeries();
     QSplineSeries *series = new QSplineSeries();
+    series2->setMarkerSize(3);
+
     series->setName("spline");
     QVector<double> Yplotdata = FPF->FourPLFunction(vecDilutionSeries,
                                                     ABCD(0,0),
@@ -375,13 +380,17 @@ void MainWindow::on_dataFit_btn_clicked()
                                                     ABCD(3,0));
     for (int i = 0; i< Yplotdata.size();i ++) {
         series->append(log10(vecDilutionSeries.at(i)),Yplotdata.at(i));
+        series2->append(log10(vecDilutionSeries.at(i)),vecMean.at(i));
     }
 
     QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
+    chart->addSeries(series2);
+
     chart->setTitle("D+(A-D)/(1+(x/C)^B)");
     chart->createDefaultAxes();
+
 //    chart->axisY()->setRange(0, 10);
 //    QChartView *chartView = new QChartView(chart);
 //    chartView->setRenderHint(QPainter::Antialiasing);
