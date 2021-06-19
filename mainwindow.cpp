@@ -346,10 +346,18 @@ void MainWindow::on_dataFit_btn_clicked()
 //    ui->tableWidget_parameter->setItem(0,0, new QTableWidgetItem(1234));
     for (int i = 0; i < ABCD.rows();i++) {
         double tmp = ABCD(i,0);
-
         QString str = QString::number(tmp);
         ui->tableWidget_parameter->setItem(i,0, new QTableWidgetItem(str));
     }
+   double rsq = LM->Rsquare(vecDilutionSeries,
+                vecMean,
+                ABCD(0,0),
+                ABCD(1,0),
+                ABCD(2,0),
+                ABCD(3,0));
+
+    QString str = QString::number(rsq);
+    ui->tableWidget_parameter->setItem(4,0, new QTableWidgetItem(str));
 
     //    FourParameterFunction *FPF = new FourParameterFunction();
 

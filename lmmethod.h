@@ -24,6 +24,12 @@ public:
     double two_norm(MatrixXd g_);
     VectorXd Solve(MatrixXd A, MatrixXd g, double mu);
     double setMu(MatrixXd A, double tao);
+    double Rsquare(QVector<double> Xd,
+                   QVector<double> Yd,
+                   double A,
+                   double B,
+                   double C,
+                   double D);
     ~LMmethod();
 };
 

@@ -121,6 +121,11 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
         }
 //        cout << P << endl;
     }
+//    Rsquare(X,Y,
+//            P(0,0),
+//            P(1,0),
+//            P(2,0),
+//            P(3,0));
     return P;
 }
 
@@ -203,4 +208,19 @@ double LMmethod::setMu(MatrixXd A, double tao)
     }
     double mu_tmp = tao*(*max_element(vec.begin(),vec.end()));
     return mu_tmp;
+}
+
+double LMmethod::Rsquare(QVector<double> Xd, QVector<double> Yd, double A, double B, double C, double D)
+{
+    MatrixXd F = Ep(Xd,Yd,A,B,C,D);
+    MatrixXd F2 = F.transpose()*F;
+    double sum = accumulate(Yd.begin(),Yd.end(),0.0);
+    double mean = sum/Yd.size();
+    double sum2 = 0.0;
+    for(int i = 0; i < Yd.size(); i++){
+       double tmp = Yd.at(i) - mean;
+       sum2 += pow(tmp,2);
+    }
+    double rsq = 1 - sum/sum2;
+    return rsq;
 }
