@@ -48,16 +48,21 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
     g.resize(J.transpose().rows(), 1);
     g = J.transpose()*f;
     found = infinite_norm(g) <= e1;
+    qDebug() <<  "found = infinite_norm(g) <= e1";
+    qDebug() << infinite_norm(g);
     double mu;
     mu = setMu(Am, tao);
     while(!found && k < Kmax)
     {
         k = k + 1;
-        qDebug() << k;
-        qDebug()<< mu;
+        qDebug()<<k;
+//        qDebug() << k;
+//        qDebug()<< mu;
         deltaP = Solve(Am, g, mu);
 //        cout << "P" << endl;
 //        cout << P << endl;
+        qDebug() << "two_norm(deltaP) <= e2*(two_norm(P) + e2)";
+        qDebug()<< deltaP.norm() << e2*(two_norm(P) + e2);
         if(two_norm(deltaP) <= e2*(two_norm(P) + e2))
         {
             found = true;
@@ -89,7 +94,7 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
 //            qDebug()<<rho;
             if(rho > 0)
             {
-                qDebug()<<"到此";
+//                qDebug()<<"到此";
                 P = P_new;
                 J = FPF->JocabiMatrix(X,
                                       P(0,0),
@@ -109,14 +114,12 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
                 v = 2;
             }
             else {
-
 //                qDebug()<<"到此";
-
                 mu = mu*v;
                 v = 2*v;
             }
-
         }
+        cout << P << endl;
     }
     return P;
 }
@@ -186,7 +189,8 @@ VectorXd LMmethod::Solve(MatrixXd A, MatrixXd g, double mu)
     Vector4d delta_tmp;
     //    delta_tmp = L_matrix.ldlt().solve(-this->g_);
     Vector4d Z;
-    delta_tmp = L_matrix.inverse()*(-1*g);
+//    delta_tmp = L_matrix.inverse()*(-1*g);
+    delta_tmp = L_matrix.ldlt().solve(-1*g);
     return delta_tmp;
 }
 

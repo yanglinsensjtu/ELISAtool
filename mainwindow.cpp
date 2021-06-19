@@ -76,15 +76,15 @@ MainWindow::MainWindow(QWidget *parent)
                       B,
                       C,
                       D);
-       VectorXd Xm;
-       Xm.resize(X.size(),1);
+//       VectorXd Xm;
+//       Xm.resize(X.size(),1);
 
-       for (int i = 0;i<X.size();i++) {
-           Xm(i,0) = X.at(i);
+//       for (int i = 0;i<X.size();i++) {
+//           Xm(i,0) = X.at(i);
 
-       }
-       cout << "LM->two_norm(Xm)" << endl;
-       cout << LM->infinite_norm(Xm) << endl;
+//       }
+//       cout << "LM->two_norm(Xm)" << endl;
+//       cout << LM->infinite_norm(Xm) << endl;
 
 }
 
@@ -315,12 +315,13 @@ void MainWindow::on_dataFit_btn_clicked()
         qDebug()<<vecMean;
         qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
-//    LMmethod *LM = new LMmethod();
-//    cout << LM->LM(vecDilutionSeries,vecMean,
-//                   100,
-//                   100,
-//                   300,
-//                   200);
+    LMmethod *LM = new LMmethod();
+    cout << LM->LM(vecDilutionSeries,
+                   vecMean,
+                   initialValue->getInitialA(),
+                   initialValue->getInitialB(),
+                   initialValue->getInitialC(),
+                   initialValue->getInitialD());
 
 //    FourParameterFunction *FPF = new FourParameterFunction();
 

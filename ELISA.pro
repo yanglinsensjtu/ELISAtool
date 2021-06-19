@@ -19,7 +19,6 @@ SOURCES += \
     determinant.cpp \
     fourparameterfunction.cpp \
     fourplinitialvalue.cpp \
-    levenbergmarquarelt.cpp \
     lmmethod.cpp \
     main.cpp \
     mainwindow.cpp
