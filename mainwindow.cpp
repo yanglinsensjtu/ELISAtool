@@ -38,53 +38,56 @@ MainWindow::MainWindow(QWidget *parent)
     QDoubleValidator *aQDoubleValidator = new QDoubleValidator(50,50,5,this);
     ui->startConcentration->setValidator(aQDoubleValidator);
     ui->dilutionValue->setValidator(aQDoubleValidator);
-//    Eigen::Matrix<float, 2, 2> M;
-//    M(0,0) = 1;
-//    M(0,1) = 2;
-//    M(1,0) = 3;
-//    M(1,1) = 4;
+    //    Eigen::Matrix<float, 2, 2> M;
+    //    M(0,0) = 1;
+    //    M(0,1) = 2;
+    //    M(1,0) = 3;
+    //    M(1,1) = 4;
 
-//    qDebug() << D->calculate(M);
-    QVector<double> X {2000,
-                       500,
-                       125,
-                       31.25,
-                       7.813,
-                       1.953,
-                       0.488,
-                       0.122,
-                       0.031,
-                       0.008};
-    QVector<double> Y {
-        238760.776,
-        238685.567,
-        240710.229,
-        223192.552,
-        128388.818,
-        26587.340,
-        4961.271,
-        3322.640,
-        3338.803,
-        3213.232};
-   double A =  3.181429e+03;
-   double B =  1.501060e+00;
-   double C =  1.658991e+00;
-   double D =  2.373467e+05;
-       LMmethod *LM = new LMmethod();
-       cout << LM->LM(X,Y,
-                      A,
-                      B,
-                      C,
-                      D);
-//       VectorXd Xm;
-//       Xm.resize(X.size(),1);
+    //    qDebug() << D->calculate(M);
+//        QVector<double> X {2000,
+//                           500,
+//                           125,
+//                           31.25,
+//                           7.813,
+//                           1.953,
+//                           0.488,
+//                           0.122,
+//                           0.031,
+//                           0.008};
+//        QVector<double> Y {
+//            238760.776,
+//            238685.567,
+//            240710.229,
+//            223192.552,
+//            128388.818,
+//            26587.340,
+//            4961.271,
+//            3322.640,
+//            3338.803,
+//            3213.232};
+//        qDebug()<<X;
+//        qDebug()<<Y;
+//       double A =  3.181429e+03;
+//       double B =  1.501060e+00;
+//       double C =  1.658991e+00;
+//       double D =  2.373467e+05;
+//           LMmethod *LM = new LMmethod();
+//           cout << LM->LM(X,
+//                          Y,
+//                          A,
+//                          B,
+//                          C,
+//                          D);
+    //       VectorXd Xm;
+    //       Xm.resize(X.size(),1);
 
-//       for (int i = 0;i<X.size();i++) {
-//           Xm(i,0) = X.at(i);
+    //       for (int i = 0;i<X.size();i++) {
+    //           Xm(i,0) = X.at(i);
 
-//       }
-//       cout << "LM->two_norm(Xm)" << endl;
-//       cout << LM->infinite_norm(Xm) << endl;
+    //       }
+    //       cout << "LM->two_norm(Xm)" << endl;
+    //       cout << LM->infinite_norm(Xm) << endl;
 
 }
 
@@ -312,73 +315,88 @@ void MainWindow::on_dataFit_btn_clicked()
             vecDilutionSeries.push_back(tmp);
         }
     }
-        qDebug()<<vecMean;
-        qDebug()<<vecDilutionSeries;
+    qDebug()<<vecMean;
+    qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
+
+    qDebug()<< initialValue->getInitialA();
+    qDebug()<< initialValue->getInitialB();
+    qDebug()<< initialValue->getInitialC();
+    qDebug()<< initialValue->getInitialD();
+
     LMmethod *LM = new LMmethod();
-    cout << LM->LM(vecDilutionSeries,
-                   vecMean,
-                   initialValue->getInitialA(),
-                   initialValue->getInitialB(),
-                   initialValue->getInitialC(),
-                   initialValue->getInitialD());
+//    double A =  3.181429e+03;
+//    double B =  1.501060e+00;
+//    double C =  1.658991e+00;
+//    double D =  2.373467e+05;
+//    double A =  100;
+//    double B =  100;
+//    double C =  100;
+//    double D =  100;
+    MatrixXd ABCD = LM->LM(vecDilutionSeries,
+                           vecMean,
+                           initialValue->getInitialA(),
+                           initialValue->getInitialB(),
+                           initialValue->getInitialC(),
+                           initialValue->getInitialD());
+    cout << ABCD << endl;
 
-//    FourParameterFunction *FPF = new FourParameterFunction();
-
-
-//    LevenbergMarquarelt *LM = new LevenbergMarquarelt(vecDilutionSeries,vecMean,
-//                                                      initialValue->getInitialA(),
-//                                                      initialValue->getInitialB(),
-//                                                      initialValue->getInitialC(),
-//                                                      initialValue->getInitialD());
-//    cout<<FPF->JocabiMatrix(vecDilutionSeries,
-//                      100,
-//                      1,
-//                      5,
-//                      2000)<<endl;
-//    cout << LM->Ep_update(vecDilutionSeries,vecMean,
-//                          initialValue->getInitialA(),
-//                          initialValue->getInitialB(),
-//                          initialValue->getInitialC(),
-//                          initialValue->getInitialD()) << endl;
-//    cout <<  << endl;
-//    cout << LM->LM() << endl;
-//     cout << LM->Po() << endl;
-
-//    LevenbergMarquarelt *LM = new LevenbergMarquarelt();
-//    LM->setJ(vecDilutionSeries,
-//             initialValue->getInitialA(),
-//             initialValue->getInitialB(),
-//             initialValue->getInitialC(),
-//             initialValue->getInitialD());
-
-//   MatrixXd j  = LM->J();
-//   LM->setA();
-//   LM->setPo(initialValue->getInitialA(),
-//               initialValue->getInitialB(),
-//               initialValue->getInitialC(),
-//               initialValue->getInitialD());
+    //    FourParameterFunction *FPF = new FourParameterFunction();
 
 
-//   LM->setEp(vecDilutionSeries,
-//             vecMean,
-//             initialValue->getInitialA(),
-//             initialValue->getInitialB(),
-//             initialValue->getInitialC(),
-//             initialValue->getInitialD());
-//   cout << LM->infinite_norm(LM->Ep()) << "  "<<LM->Ep().lpNorm<Infinity>() << endl;
-//   LM->setG();
-//   LM->setMu();
+    //    LevenbergMarquarelt *LM = new LevenbergMarquarelt(vecDilutionSeries,vecMean,
+    //                                                      initialValue->getInitialA(),
+    //                                                      initialValue->getInitialB(),
+    //                                                      initialValue->getInitialC(),
+    //                                                      initialValue->getInitialD());
+    //    cout<<FPF->JocabiMatrix(vecDilutionSeries,
+    //                      100,
+    //                      1,
+    //                      5,
+    //                      2000)<<endl;
+    //    cout << LM->Ep_update(vecDilutionSeries,vecMean,
+    //                          initialValue->getInitialA(),
+    //                          initialValue->getInitialB(),
+    //                          initialValue->getInitialC(),
+    //                          initialValue->getInitialD()) << endl;
+    //    cout <<  << endl;
+    //    cout << LM->LM() << endl;
+    //     cout << LM->Po() << endl;
 
-//   cout << LM->getMu() << endl;
+    //    LevenbergMarquarelt *LM = new LevenbergMarquarelt();
+    //    LM->setJ(vecDilutionSeries,
+    //             initialValue->getInitialA(),
+    //             initialValue->getInitialB(),
+    //             initialValue->getInitialC(),
+    //             initialValue->getInitialD());
 
-//    LM->setJ(vecDilutionSeries,
-//             initialValue->getInitialA(),
-//             initialValue->getInitialB(),
-//             initialValue->getInitialC(),
-//             initialValue->getInitialD());
-//    cout << LM->J() <<endl;
-//    cout << LM->Solve() <<endl;
+    //   MatrixXd j  = LM->J();
+    //   LM->setA();
+    //   LM->setPo(initialValue->getInitialA(),
+    //               initialValue->getInitialB(),
+    //               initialValue->getInitialC(),
+    //               initialValue->getInitialD());
+
+
+    //   LM->setEp(vecDilutionSeries,
+    //             vecMean,
+    //             initialValue->getInitialA(),
+    //             initialValue->getInitialB(),
+    //             initialValue->getInitialC(),
+    //             initialValue->getInitialD());
+    //   cout << LM->infinite_norm(LM->Ep()) << "  "<<LM->Ep().lpNorm<Infinity>() << endl;
+    //   LM->setG();
+    //   LM->setMu();
+
+    //   cout << LM->getMu() << endl;
+
+    //    LM->setJ(vecDilutionSeries,
+    //             initialValue->getInitialA(),
+    //             initialValue->getInitialB(),
+    //             initialValue->getInitialC(),
+    //             initialValue->getInitialD());
+    //    cout << LM->J() <<endl;
+    //    cout << LM->Solve() <<endl;
 
 }
 //将分组数据展示在后面表格中

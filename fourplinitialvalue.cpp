@@ -34,7 +34,7 @@ double FourPLInitialValue::getInitialA() const
 //从检测数据的均值中返回最小值作为A的初值
 void FourPLInitialValue::setInitialA(QVector<double> value)
 {
-    initialA = *min_element(value.begin(),value.end()) - 0.01;
+    initialA = *min_element(value.begin(),value.end()) - 0.0001;
 }
 double FourPLInitialValue::getInitialD() const
 {
@@ -44,7 +44,7 @@ double FourPLInitialValue::getInitialD() const
 //从检测数据的均值中返回最大值作为D的初值
 void FourPLInitialValue::setInitialD(QVector<double> value)
 {
-    initialD = *max_element(value.begin(),value.end()) + 0.01;
+    initialD = *max_element(value.begin(),value.end()) + 0.0001;
 }
 
 QVector<double> FourPLInitialValue::getVariationY() const
@@ -54,6 +54,7 @@ QVector<double> FourPLInitialValue::getVariationY() const
 //求线性变化后y的值
 void FourPLInitialValue::setVariationY(const QVector<double> &value, double initialA, double initialD)
 {
+
     QVector<double> tmp1;
     for(int i = 0; i <value.size(); i ++){
         tmp1.push_back(value.at(i)-initialD);
@@ -96,9 +97,9 @@ void FourPLInitialValue::setInitialB(Eigen::Matrix<double, 2, 2> aDeter, Eigen::
     Eigen::Matrix<double, 2, 2> DD1;
     DD1 = aDeter;
     DD1(0,0)=bDeter(0,0);
-    DD1(0,1)=bDeter(1,0);
+    DD1(1,0)=bDeter(1,0);
     Determinant *Deter = new Determinant();
-    double  tmp = -Deter->calculate(DD1)/Deter->calculate(a);
+    double  tmp = -Deter->calculate(DD1)/Deter->calculate(aDeter);
     initialB = tmp;
 
 }
@@ -112,11 +113,10 @@ void FourPLInitialValue::setInitialC(Eigen::Matrix<double, 2, 2> a, Eigen::Matri
 {
     Eigen::Matrix<double, 2, 2> DD2;
     DD2 = a;
-    DD2(1,0)=b(0,0);
+    DD2(0,1)=b(0,0);
     DD2(1,1)=b(1,0);
     Determinant *Deter = new Determinant();
-    double  tmp = exp(Deter->calculate(DD2)/Deter->calculate(a)/iniB);
-
+    double  tmp = exp((Deter->calculate(DD2)/Deter->calculate(a))/iniB);
     initialC = tmp;
 
 }
@@ -181,6 +181,8 @@ void FourPLInitialValue::setInitialValue(const double &A, const double &B, const
     value.push_back(D);
     initialValue = value;
 }
+
+
 
 FourPLInitialValue::FourPLInitialValue()
 {

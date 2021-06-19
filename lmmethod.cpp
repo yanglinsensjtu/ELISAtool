@@ -48,21 +48,21 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
     g.resize(J.transpose().rows(), 1);
     g = J.transpose()*f;
     found = infinite_norm(g) <= e1;
-    qDebug() <<  "found = infinite_norm(g) <= e1";
-    qDebug() << infinite_norm(g);
+//    qDebug() <<  "found = infinite_norm(g) <= e1";
+//    qDebug() << infinite_norm(g);
     double mu;
     mu = setMu(Am, tao);
     while(!found && k < Kmax)
     {
         k = k + 1;
-        qDebug()<<k;
+//        qDebug()<<k;
 //        qDebug() << k;
 //        qDebug()<< mu;
         deltaP = Solve(Am, g, mu);
 //        cout << "P" << endl;
 //        cout << P << endl;
-        qDebug() << "two_norm(deltaP) <= e2*(two_norm(P) + e2)";
-        qDebug()<< deltaP.norm() << e2*(two_norm(P) + e2);
+//        qDebug() << "two_norm(deltaP) <= e2*(two_norm(P) + e2)";
+//        qDebug()<< deltaP.norm() << e2*(two_norm(P) + e2);
         if(two_norm(deltaP) <= e2*(two_norm(P) + e2))
         {
             found = true;
@@ -119,7 +119,7 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
                 v = 2*v;
             }
         }
-        cout << P << endl;
+//        cout << P << endl;
     }
     return P;
 }

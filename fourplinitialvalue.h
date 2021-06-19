@@ -9,6 +9,7 @@ private:
     Eigen::Matrix<double, 2, 2> a;
     Eigen::Matrix<double, 2, 1> b;
     double initialA, initialB, initialC, initialD;
+    double Bm, Cm;
     QVector<double> variationY, variationX;
     QVector<double> readValue, dilutionDrugValue;
     QVector<double> initialValue;
