@@ -52,15 +52,14 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
     mu = setMu(Am, tao);
     while(!found && k < Kmax)
     {
-        k++;
+        k = k + 1;
         qDebug() << k;
         qDebug()<< mu;
         deltaP = Solve(Am, g, mu);
-        cout << "P" << endl;
-        cout << P << endl;
+//        cout << "P" << endl;
+//        cout << P << endl;
         if(two_norm(deltaP) <= e2*(two_norm(P) + e2))
         {
-
             found = true;
         }
         else
@@ -82,7 +81,11 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
                         P_new(1,0),
                         P_new(2,0),
                         P_new(3,0));
-            rho = (two_norm(FX) - two_norm(FX_new))/(deltaP.transpose()*(mu*deltaP + g));
+
+            MatrixXd FU = 0.5*FX.transpose()*FX - 0.5*FX_new.transpose()*FX_new;
+            MatrixXd LD = -deltaP.transpose()*J.transpose()*FX - 0.5 * deltaP.transpose()*J.transpose()*J*deltaP;
+            rho = FU(0,0)/LD(0,0);
+
 //            qDebug()<<rho;
             if(rho > 0)
             {
@@ -105,7 +108,7 @@ VectorXd LMmethod::LM(QVector<double> X, QVector<double> Y, double A, double B, 
                 mu = mu*max<double>(1/3, 1-pow((2*rho - 1),3));
                 v = 2;
             }
-            else if (mu > 0.75) {
+            else {
 
 //                qDebug()<<"到此";
 
@@ -177,13 +180,13 @@ double LMmethod::two_norm(MatrixXd g_)
 VectorXd LMmethod::Solve(MatrixXd A, MatrixXd g, double mu)
 {
 
-    Matrix4d L_matrix = A + mu* (MatrixXd::Identity(A.rows(), A.cols()));
+    Matrix4d L_matrix = A + mu * (MatrixXd::Identity(A.rows(), A.cols()));
     //    cout << L_matrix << endl;
     //    cout << L_matrix.inverse()*L_matrix << endl;
     Vector4d delta_tmp;
     //    delta_tmp = L_matrix.ldlt().solve(-this->g_);
     Vector4d Z;
-    delta_tmp = L_matrix.inverse()*(1*g);
+    delta_tmp = L_matrix.inverse()*(-1*g);
     return delta_tmp;
 }
 

@@ -28,7 +28,6 @@ HEADERS += \
     determinant.h \
     fourparameterfunction.h \
     fourplinitialvalue.h \
-    levenbergmarquarelt.h \
     lmmethod.h \
     mainwindow.h
 

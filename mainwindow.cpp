@@ -45,8 +45,46 @@ MainWindow::MainWindow(QWidget *parent)
 //    M(1,1) = 4;
 
 //    qDebug() << D->calculate(M);
+    QVector<double> X {2000,
+                       500,
+                       125,
+                       31.25,
+                       7.813,
+                       1.953,
+                       0.488,
+                       0.122,
+                       0.031,
+                       0.008};
+    QVector<double> Y {
+        238760.776,
+        238685.567,
+        240710.229,
+        223192.552,
+        128388.818,
+        26587.340,
+        4961.271,
+        3322.640,
+        3338.803,
+        3213.232};
+   double A =  3.181429e+03;
+   double B =  1.501060e+00;
+   double C =  1.658991e+00;
+   double D =  2.373467e+05;
+       LMmethod *LM = new LMmethod();
+       cout << LM->LM(X,Y,
+                      A,
+                      B,
+                      C,
+                      D);
+       VectorXd Xm;
+       Xm.resize(X.size(),1);
 
+       for (int i = 0;i<X.size();i++) {
+           Xm(i,0) = X.at(i);
 
+       }
+       cout << "LM->two_norm(Xm)" << endl;
+       cout << LM->infinite_norm(Xm) << endl;
 
 }
 
@@ -277,12 +315,12 @@ void MainWindow::on_dataFit_btn_clicked()
         qDebug()<<vecMean;
         qDebug()<<vecDilutionSeries;
     FourPLInitialValue *initialValue = new FourPLInitialValue(vecMean,vecDilutionSeries);
-    LMmethod *LM = new LMmethod();
-    cout << LM->LM(vecDilutionSeries,vecMean,
-                   100,
-                   100,
-                   300,
-                   200);
+//    LMmethod *LM = new LMmethod();
+//    cout << LM->LM(vecDilutionSeries,vecMean,
+//                   100,
+//                   100,
+//                   300,
+//                   200);
 
 //    FourParameterFunction *FPF = new FourParameterFunction();
 

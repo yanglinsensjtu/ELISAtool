@@ -34,7 +34,7 @@ QVector<double> FourParameterFunction::PartialerivativeA(QVector<double> xVector
     for (int i = 0; i < xVector.size(); i++)
     {
         //        1/(1+(x/C)^B)
-        yVector.push_back(1/(1+pow((xVector.at(i)/C),B)));
+        yVector.push_back(-(1/(1+pow((xVector.at(i)/C),B))));
     }
     return yVector;
 
@@ -50,7 +50,7 @@ QVector<double> FourParameterFunction::PartialerivativeB(QVector<double> xVector
     for (int i = 0; i < xVector.size(); i++)
     {
         //        ((x/C)^B)*(log(x/C))*((D-A)/((1+(x/C)^B)^2))
-        yVector.push_back(pow(xVector.at(i)/C, B)*(log(xVector.at(i)/C)*((D-A)/pow((1+pow(xVector.at(i)/C,B)),2))));
+        yVector.push_back(-(pow(xVector.at(i)/C, B)*(log(xVector.at(i)/C)*((D-A)/pow((1+pow(xVector.at(i)/C,B)),2)))));
     }
     return yVector;
 
@@ -66,7 +66,7 @@ QVector<double> FourParameterFunction::PartialerivativeC(QVector<double> xVector
     for (int i = 0; i < xVector.size(); i++)
     {
         //        ((x/C)^B)*((A-D)/((1+(x/C)^B)^2))*(B/C)
-        yVector.push_back(pow(xVector.at(i)/C, B)*((A-D)/(pow(1+pow(xVector.at(i)/C,B),2)))*(B/C));
+        yVector.push_back(-(pow(xVector.at(i)/C, B)*((A-D)/(pow(1+pow(xVector.at(i)/C,B),2)))*(B/C)));
     }
     return yVector;
 }
@@ -79,7 +79,7 @@ QVector<double> FourParameterFunction::PartialerivativeD(QVector<double> xVector
     for (int i = 0; i < xVector.size(); i++)
     {
         //        1-1/(1+(x/C)^B)
-        yVector.push_back(1-1/(1+pow((xVector.at(i)/C), B)));
+        yVector.push_back(-(1-1/(1+pow((xVector.at(i)/C), B))));
     }
     return yVector;
 }
