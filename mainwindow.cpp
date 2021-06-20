@@ -2,6 +2,7 @@
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QScatterSeries>
 using namespace QtCharts;
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
@@ -391,9 +392,9 @@ void MainWindow::on_dataFit_btn_clicked()
     chart->setTitle("D+(A-D)/(1+(x/C)^B)");
     chart->createDefaultAxes();
 
-//    chart->axisY()->setRange(0, 10);
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
+    //    chart->axisY()->setRange(0, 10);
+    //    QChartView *chartView = new QChartView(chart);
+    //    chartView->setRenderHint(QPainter::Antialiasing);
     ui->widget_7->setChart(chart);
     //    FourParameterFunction *FPF = new FourParameterFunction();
 
@@ -463,4 +464,10 @@ void MainWindow::on_pushButton_2_clicked()
         layout->addWidget(qtw.at(i));
     }
     ui->settingtab->setLayout(layout);
+}
+
+void MainWindow::on_BtnPredictPlot_clicked()
+{
+    double EC50 = ui->tableWidget_parameter->item(2,0)->text().toDouble();
+    qDebug() << EC50;
 }

@@ -198,6 +198,13 @@
                 </property>
                </spacer>
               </item>
+              <item>
+               <widget class="QPushButton" name="BtnPredictPlot">
+                <property name="text">
+                 <string>预测绘图</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>

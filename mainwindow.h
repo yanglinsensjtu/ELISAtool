@@ -37,6 +37,8 @@ private slots:
     void on_dataFit_btn_clicked();
     void on_pushButton_2_clicked();
 
+    void on_BtnPredictPlot_clicked();
+
 private:
     //    保存分组的个数
     int group_count = 0;
